@@ -1,0 +1,10 @@
+
+--This line, and those below, will be ignored--
+
+_M   .
+A    .svnignore
+A    files.txt
+AM   kuvat
+AM   kuvat/avaak.png
+AM   kuvat/eiaukeak.png
+AM   kuvat/paaikkunak.png

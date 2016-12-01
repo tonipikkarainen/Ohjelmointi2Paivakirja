@@ -1,0 +1,67 @@
+package paivakirja;
+
+import java.util.ArrayList;
+
+/**
+ * Luokka hoitaa transkriptio-harjoitus-liitosten joukkoa
+ * @author tonipikkarainen
+ * @version 29.2.2016
+ *
+ */
+public class Transliitokset {
+    private ArrayList<Transliitos> alkiot = new ArrayList<Transliitos>();
+
+    /**
+     * Lis‰t‰‰n transkriptioliitos listaan
+     * @param transliitos lis‰tt‰v‰
+     */
+    public void lisaa(Transliitos transliitos){
+        alkiot.add(transliitos);
+    }
+
+    /**
+     * Haetaan tallennettujen alkioiden lukum‰‰r‰
+     * @return lukum‰‰r‰ kokonaislukuna
+     */
+    public int getLukumaara(){
+        return alkiot.size();
+    }
+
+    /**
+     * Haetaan tietty transliitos alkioista
+     * @param i mist‰ paikasta transliitos haetaan
+     * @return transliitos tietyst‰ paikastas
+     * @throws IndexOutOfBoundsException jos annetaan v‰‰r‰nlainen indeksi
+     */
+    public Transliitos anna(int i) throws IndexOutOfBoundsException {
+        if (i<0 || alkiot.size() <= i)
+            throw new IndexOutOfBoundsException("V‰‰r‰n suuruinen indeksi: " + i);
+        return alkiot.get(i);
+    }
+
+    public static void main(String[] args) {
+        Transliitokset transliitokset =new Transliitokset();
+
+        Transliitos liitos1 = new Transliitos();
+        Transliitos liitos2 = new Transliitos();
+
+        liitos1.vastaaMalli();
+        liitos2.vastaaMalli();
+        
+        transliitokset.lisaa(liitos1);
+        transliitokset.lisaa(liitos2);
+        transliitokset.lisaa(liitos1);
+        transliitokset.lisaa(liitos1);
+
+        System.out.println("===== transliitokset-testi =====");
+        for(int i = 0; i < transliitokset.getLukumaara(); i++){
+            Transliitos transliitos = transliitokset.anna(i);
+            System.out.println("Transliitos numero: "+i);
+            transliitos.tulosta();
+
+        }
+
+
+    }
+
+}

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import fi.jyu.mit.fxgui.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxpaivakirja.MuokkausController">
+   <center>
+      <SplitPane BorderPane.alignment="CENTER">
+         <items>
+            <BorderPane fx:id="panelHarjoitus" maxWidth="200.0" minWidth="170.0" prefWidth="170.0">
+               <top>
+                  <Label text="Harjoituksen tiedot" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <content>
+                        <GridPane fx:id="gridHarjoitus" hgap="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <Label text="Kesto (min)" GridPane.rowIndex="1" />
+                              <Label text="Soinnut" GridPane.rowIndex="2" />
+                              <Label text="Säveltapailu" GridPane.rowIndex="3" />
+                              <Label text="Tekniikka" GridPane.rowIndex="4" />
+                              <TextField text="120" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                              <TextField fx:id="textTiedot" layoutX="94.0" layoutY="23.0" text="Billies Bounce" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField layoutX="94.0" layoutY="83.0" text="Pikkaus" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Päivämäärä" />
+                              <TextField text="01.01.2016" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </center>
+               <bottom>
+                  <Label fx:id="labelVirhe" text="Label" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </center>
+   <bottom>
+      <HBox spacing="10.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <children>
+            <Button onAction="#handleOK" text="_Ok">
+               <tooltip>
+                  <Tooltip text="Lisää uuden harjoituksen" />
+               </tooltip>
+            </Button>
+            <Button onAction="#handleCancel" text="Cancel">
+               <tooltip>
+                  <Tooltip text="Tallentaa tiedot" />
+               </tooltip>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

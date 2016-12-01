@@ -1,0 +1,132 @@
+package fxpaivakirja;
+
+
+import java.io.PrintStream;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.ModalControllerInterface;
+import fi.jyu.mit.fxgui.TextAreaOutputStream;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+
+
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import paivakirja.Harjoitus;
+
+/**
+ * Kysyt‰‰n tiedot ja luodaan t‰t‰ varten dialogi.
+ * 
+ * @author Toni Pikkarainen
+ * @version 16.2.2016
+ */
+public class MuokkausController implements ModalControllerInterface<Harjoitus>,Initializable {
+    
+    @FXML private TextField textTiedot;
+    @FXML private BorderPane panelHarjoitus;
+    @FXML private Label labelVirhe;
+
+    
+    @Override
+    public void initialize(URL url, ResourceBundle bundle){
+        alusta();
+    }
+    
+    @FXML private void handleOK() {
+        ModalController.closeStage(labelVirhe);
+    }
+
+    
+    @FXML private void handleCancel() {
+        ModalController.closeStage(labelVirhe);
+    }
+    
+  //===========================================================================================    
+    // T‰st‰ eteenp‰in ei k‰yttˆliittym‰‰n suoraan liittyv‰‰ koodia   
+
+    private TextArea areaHarjoitus = new TextArea();
+    private Harjoitus harjoitusKohdalla;
+
+    
+    @Override
+    public Harjoitus getResult() {
+        return harjoitusKohdalla;
+    }
+
+    /**
+     * Laitetaan parametrina tullut harjoitus
+     * harjoitusKohdalla muuttujaan. Menn‰‰n
+     * seuraavaan aliohjelmaan.
+     */
+    @Override
+    public void setDefault(Harjoitus oletus) {
+        harjoitusKohdalla = oletus;
+        naytaHarjoitus();
+        naytaVirhe("Ei osata viel‰ muokata");
+    }
+    
+    
+    /**
+     * N‰ytet‰‰n parametrina syˆtetyn harjoituksen tiedot muokkaus-
+     * ikkunassa.
+     */
+    private void naytaHarjoitus(){
+        if(harjoitusKohdalla == null) return;
+        areaHarjoitus.setText("");
+        try(PrintStream os =TextAreaOutputStream.getTextPrintStream(areaHarjoitus)){
+            harjoitusKohdalla.tulosta(os);
+        }
+    }
+    
+    
+    /**
+     * N‰ytet‰‰n virheteksti
+     * @param virhe teksti joka n‰ytet‰‰n
+     */
+    private void naytaVirhe(String virhe){
+        if(virhe == null || virhe.isEmpty()){
+            labelVirhe.setText("");
+            return;
+        }
+        labelVirhe.setText(virhe);   
+    }
+
+
+    
+    /**
+     * Mit‰ tehd‰‰n kun dialogi on n‰ytetty
+     */
+    @Override
+    public void handleShown() {
+        textTiedot.requestFocus();
+    }
+    
+    
+    /**
+     * Laitetaan panelHarjoitus-kohtaan tekstialue nimelt‰
+     * areaHarjoitus.
+     */
+    private void alusta(){
+        panelHarjoitus.setCenter(areaHarjoitus);
+        areaHarjoitus.setFont(new Font ("Courier New", 12));
+    }
+    
+    
+    /**
+     * Luodaan tietojenkysymisdialogi
+     * @param modalityStage mille ollaan modaalisia, null = sovellukselle
+     * @param oletus oletus tiedot
+     * @return null jos painetaan Cancel, muuten tiedot
+     */
+    public static Harjoitus kysyTiedot(Stage modalityStage, Harjoitus oletus) {
+        return ModalController.showModal(
+                MuokkausController.class.getResource("MuokkausView.fxml"),
+                "Paivakirja", modalityStage, oletus);
+    }
+}

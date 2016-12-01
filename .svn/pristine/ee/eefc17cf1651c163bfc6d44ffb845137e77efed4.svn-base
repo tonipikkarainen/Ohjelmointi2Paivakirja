@@ -1,0 +1,88 @@
+package paivakirja;
+
+/**
+ * Luokka pit‰‰ huolen yhdest‰ kokonaisuudesta harjoituksia
+ * @author tonipikkarainen
+ * @version 23.2.2016
+ *
+ */
+public class Harjoitukset {
+
+    private static final int MAX_HARJOITUSLKM=8;
+    private Harjoitus[] alkiot = new Harjoitus[MAX_HARJOITUSLKM];
+    private int lukumaara;
+
+    
+    /**
+     * Lis‰t‰‰n uusi harjoitus
+     * @param harj harjoitus joka lis‰t‰‰n
+     * @throws SailoException jos tuodaan liikaa alkioita
+     */
+    public void lisaa(Harjoitus harj) throws SailoException{
+        if (lukumaara >= alkiot.length) throw new SailoException("Liikaa alkioita");
+        alkiot[lukumaara]=harj;
+        lukumaara++;
+    }//TODO testit!
+
+    
+    
+    /**
+     * Haetaan tietty harjoitus alkioista
+     * @param i mist‰ paikasta harjoitus haetaan
+     * @return harjoituksen tietyst‰ paikasta
+     * @throws IndexOutOfBoundsException jos annetaan v‰‰r‰nlainen indeksi
+     */
+    public Harjoitus anna(int i) throws IndexOutOfBoundsException {
+        if (i<0 || lukumaara <= i)
+            throw new IndexOutOfBoundsException("V‰‰r‰n suuruinen indeksi: " + i);
+        return alkiot[i];
+    }
+
+
+    
+    /**
+     * Haetaan tallennettujen alkioiden lukum‰‰r‰
+     * @return lukum‰‰r‰ kokonaislukuna
+     */
+    public int getLukumaara(){
+        return lukumaara;
+    }
+
+    
+    
+    /**
+     * kokeilup‰‰ohjelma
+     * @param args ei k‰ytˆss‰
+     */
+    public static void main(String[] args) {
+        Harjoitukset harjoitukset = new Harjoitukset();
+
+        try{
+            Harjoitus harj1 = new Harjoitus();
+            Harjoitus harj2 = new Harjoitus();
+
+            harj1.rekisteroi();
+            harj2.rekisteroi();
+
+            harj1.vastaaEkaHarj();
+            harj2.vastaaEkaHarj();
+
+            harjoitukset.lisaa(harj1);
+            harjoitukset.lisaa(harj2);
+            
+
+
+            System.out.println("===== Harjoitukset-testi =====");
+            for(int i = 0; i < harjoitukset.getLukumaara(); i++){
+                Harjoitus harjoitus = harjoitukset.anna(i);
+                System.out.println("Harjoitus numero: "+i);
+                harjoitus.tulosta(System.out);
+            }
+
+        }catch(SailoException e){
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+}

@@ -1,0 +1,473 @@
+package fxpaivakirja;
+
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import kanta.Int;
+import paivakirja.Harjoitus;
+import paivakirja.Paivakirja;
+import paivakirja.SailoException;
+import paivakirja.Transkriptio;
+import paivakirja.Transliitos;
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.*;
+
+
+/**
+ * Harjoitusp‰iv‰kirjan k‰sittelij‰luokka
+ * @author tonipikkarainen
+ * @version 13.1.2016
+ *
+ */
+public class PaivakirjaGUIController implements Initializable {
+
+    @FXML private ListChooser chooserHarjoitukset;
+    @FXML private ScrollPane panelHarjoitus;
+    @FXML private BorderPane panelTranskriptio;
+    @FXML private GridPane tableHarjoitus;
+    @FXML private StringGrid<Transkriptio> tableTranskriptio;
+
+    //@FXML private ListChooser chooserTranskriptiot;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle){
+        alusta();
+    }
+
+
+    /**
+     * K‰sitell‰‰n uuden j‰senen lis‰‰minen
+     * @throws IOException 
+     */
+    @FXML private void handleUusiHarjoitus() throws IOException {
+        uusiHarjoitus();
+    }
+
+
+    @FXML private void handlePoistaHarjoitus() {
+        Dialogs.showMessageDialog("Ei osata viel‰ poistaa harjoitusta.");
+    }
+
+
+    @FXML private void handleLuoUusi() {
+        Dialogs.showInputDialog("Anna uuden p‰iv‰kirjan nimi", "nimi");
+    }
+
+
+
+    @FXML private void handleLisaaTranskriptio() {
+        lisaaTranskriptio();
+    }
+
+
+    @FXML private void handlePoistaTranskriptio() {
+        Dialogs.showMessageDialog("Ei osata viel‰ poistaa transkriptiota.");
+    }
+
+
+    @FXML private void handleLisaaArpeggio() {
+        String arpeggio= LisaaArpeggioController.kysyArpeggio(null);
+        Dialogs.showMessageDialog(arpeggio);
+    }
+
+
+    @FXML private void handlePoistaArpeggio() {
+        Dialogs.showMessageDialog("Ei osata viel‰ poistaa arpeggiota.");
+    }
+
+
+    @FXML private void handleTietoja() {
+        ModalController.showModal(PaivakirjaGUIController.class.getResource("TietojaView.fxml"), "P‰iv‰kirja", null, "");
+    }
+
+    /**
+     * Tallentaminen
+     */
+    @FXML private void handleTallenna() {
+        tallenna();
+    }
+
+
+    @FXML private void handleMuokkaa() {
+        muokkaa();
+    }
+
+
+    /**
+     * K‰sitell‰‰n lopetus
+     */
+    @FXML private void handleLopeta() {
+        tallenna();
+        Platform.exit();
+    }
+
+
+    @FXML private void handleOhje() {
+        avustus();
+    }
+
+
+    @FXML private void handleLaske() {
+        Dialogs.showMessageDialog("Ei osata viel‰ laskea.");
+    }
+
+
+    @FXML private void handleTulosta() {
+        Dialogs.showMessageDialog("Ei osata viel‰ tulostaa. Tulostetaan hakuehdon t‰ytt‰v‰t harjoitukset.");
+    }
+
+
+    /**
+     * K‰sitell‰‰n uuden p‰iv‰kirjan avausikkunan avaus
+     * 
+     *
+     */
+    @FXML private void handleAvausikkuna() {
+        String paivakirjanNimi = PaivakirjanNimiController.kysyNimi(null, paivakirjaOletus);
+        Dialogs.showMessageDialog(paivakirjanNimi);
+    }
+
+    //===========================================================================================    
+    // T‰st‰ eteenp‰in ei k‰yttˆliittym‰‰n suoraan liittyv‰‰ koodia   
+
+    private Paivakirja paivakirja;
+    private ListView<Harjoitus> listHarjoitukset = new ListView<Harjoitus>();
+    private ObservableList<Harjoitus> listdataHarjoitukset = FXCollections.observableArrayList();
+
+    private Harjoitus apuharjoitus = new Harjoitus();
+
+    private Transkriptio aputranskriptio = new Transkriptio();
+
+    //private TextArea areaHarjoitus = new TextArea();
+    //private TextArea areaTranskriptio = new TextArea();
+    private TextField[] tekstit;
+
+
+
+    private Harjoitus harjoitusKohdalla;
+    private String paivakirjaOletus = "tonipikkarainen";
+
+
+    /**
+     * Luokka jolla hoidetaan miten harjoitus n‰kyy listassa
+     * @author tonipikkarainen
+     * @version 25.2.2016
+     *
+     */
+    public static class CellHarjoitus extends ListCell<Harjoitus>{
+        @Override protected void updateItem(Harjoitus item, boolean empty){
+            super.updateItem(item, empty);
+            setText(empty ? "" :item.getPvm());
+        }
+    }
+
+
+    /**
+     * Alustetaan listan‰kym‰
+     */
+    private void alusta(){
+        //panelTranskriptio.setCenter(areaTranskriptio);
+
+        BorderPane parent = (BorderPane)chooserHarjoitukset.getParent();
+        parent.setCenter(listHarjoitukset);
+        listHarjoitukset.setCellFactory(p -> new CellHarjoitus());
+
+        listHarjoitukset.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
+            naytaHarjoitus();
+        });
+
+        tekstit = MuokkausController.luoKentat(tableHarjoitus);
+
+        for(int i=apuharjoitus.ensimmainenKentta() ; i<tekstit.length ; i++)
+            tekstit[i].setEditable(false);
+
+        int eka = aputranskriptio.ensimmainenKentta();
+        int lkm = aputranskriptio.kenttia();
+
+        String[] otsikot = new String[lkm-eka];
+        for ( int i=0 , k=eka ; k < lkm ; i++,k++){
+            otsikot[i] = aputranskriptio.getKentta(k);
+        }
+        tableTranskriptio.initTable(otsikot);
+        tableTranskriptio.setEditable(false);
+
+
+    }
+
+    /*
+    protected void kasitteleMuutosHarjoitukseen(int k, TextField text) {
+        if (harjoitusKohdalla == null ) return;
+        String sijoitus = text.getText();
+
+        String virhe = null;
+        virhe = harjoitusKohdalla.aseta(k, sijoitus);
+        if(virhe == null){
+            text.getStyleClass().removeAll("virhe");
+        }
+        else{
+            text.getStyleClass().add("virhe");
+        }
+
+    }
+
+     */
+
+    /**
+     * Hakee paivakirjaan tallennetut harjoitukset
+     * @param nimi p‰iv‰kirjan nimi
+     */
+    protected void lueTiedosto(String nimi) {
+        paivakirjaOletus = nimi;
+        listdataHarjoitukset.clear();
+        listHarjoitukset.setItems(listdataHarjoitukset);
+        try {
+            paivakirja.lueTiedosto(nimi);
+        } catch (SailoException e) {
+            //Dialogs.showMessageDialog(e.getMessage());
+            return;
+        }
+        for (int i = 0; i < paivakirja.getHarjoituksia(); i++) {
+            Harjoitus harjoitus = paivakirja.annaHarjoitus(i);
+            listdataHarjoitukset.add(harjoitus);
+        }
+        listHarjoitukset.getSelectionModel().select(0);   
+    }
+
+
+    /**
+     * Kysyt‰‰n tiedoston nimi ja luetaan se
+     * @return true jos onnistui, false jos ei
+     * @throws SailoException  ei taida en‰‰ heitt‰‰
+     */
+    public boolean avaa() throws SailoException {
+        String uusinimi = PaivakirjanNimiController.kysyNimi(null, paivakirjaOletus);
+        if (uusinimi == null) return false;
+        lueTiedosto(uusinimi);
+        return true;
+    }
+
+
+    /**
+     * Haetaan sen harjoituksen tiedot, joka on valittuna harjoituslistasta.
+     * Tulostetaan tiedot tietovirtaan.
+     */
+    private void naytaHarjoitus(){
+        harjoitusKohdalla = listHarjoitukset.getSelectionModel().getSelectedItem();
+        if(harjoitusKohdalla == null) return;
+        MuokkausController.naytaHarjoitus(tekstit,harjoitusKohdalla);
+        /*
+        for ( int i = apuharjoitus.ensimmainenKentta();i < apuharjoitus.getKenttia();i++){
+            tekstit[i].setText(harjoitusKohdalla.anna(i));
+        }
+         */
+
+
+        naytaKaikkiTranskriptiot();
+    }
+
+
+    /**
+     * N‰ytet‰‰n kaikki transkriptiot, jotka liittyv‰t harjoitukseen, jonka kohdalla ollaan.
+     * Etsit‰‰n ensin harjoitukseen liittyv‰t transkriptio id:t liitoksista ja
+     * sitten tulostetaan transkriptioista n‰it‰ id:t‰ vastaavat transkriptiot.
+     */
+    private void naytaKaikkiTranskriptiot() {
+        //areaTranskriptio.setText("");
+        tableTranskriptio.clear();
+        ArrayList<Int> liittyvatTransIdt = paivakirja.liittyvatLiitokset(harjoitusKohdalla);
+
+        for (int i = 0; i < liittyvatTransIdt.size(); i++) {
+
+            naytaTranskriptio(paivakirja.annaTranskriptiot(liittyvatTransIdt.get(i).getArvo()));
+
+        }
+    }
+
+
+    /**
+     * N‰yt‰t‰‰n transkriptio
+     * @param naytettava transkriptio, joka halutaan n‰ytt‰‰.
+     */
+    private void naytaTranskriptio(Transkriptio naytettava){
+        if(harjoitusKohdalla == null) return;
+        if(naytettava == null) return;
+        int kenttia = naytettava.kenttia();
+        String[] rivi = new String[kenttia - naytettava.ensimmainenKentta()];
+        for ( int i=0 , k=naytettava.ensimmainenKentta() ; k < kenttia ; i++,k++){
+            rivi[i] = naytettava.anna(k);
+        }
+
+        tableTranskriptio.add(naytettava,rivi);
+        //areaTranskriptio.setText("");
+        /*try(PrintStream os =TextAreaOutputStream.getTextPrintStream(areaTranskriptio)){
+            naytettava.tulosta(os);}*/
+
+    }
+
+
+    /**
+     * Tarkistetaan onko tallennus tehty
+     * @return true jos saa sulkea sovelluksen, false jos ei
+     */
+    public boolean voikoSulkea() {
+        tallenna();
+        return true;
+    }
+
+
+    /**
+     * Laitetaan annettu kirja paivakirjaksi
+     * @param paivakirja annettu p‰iv‰kirja
+     */
+    public void setPaivakirja(Paivakirja paivakirja){
+        this.paivakirja=paivakirja;
+    }
+
+
+    /**
+     * Tietojen tallennus
+     */
+    private void tallenna() {
+        paivakirja.tallenna();
+    }
+
+
+    /**
+     * Ohjataan avustukseen eli suunnitelman websivuille.
+     */
+    private void avustus() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://trac.cc.jyu.fi/projects/ohj2ht/wiki/k2016/suunnitelmat/totapikk");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+        } catch (IOException e) {
+            return;
+        }
+    }
+
+
+
+    /**
+     * Lis‰t‰‰n uusi transkriptio
+     */
+    protected void uusiTranskriptio(){
+        if(harjoitusKohdalla == null) return;
+        Transkriptio uusi = new Transkriptio();
+
+        uusi.vastaaBad();
+        uusi.rekisteroi(); 
+
+        paivakirja.lisaa(uusi);
+
+        uusiTransliitos(harjoitusKohdalla.getIdNumero(), uusi.getIdNumero());
+
+        naytaTranskriptio(uusi);
+    }
+
+
+    /**
+     * Lis‰t‰‰n uusi transkription ja harjoituksen v‰linen liitos.
+     * @param harjIdNumero liitokseen tuleva harjoituksen id
+     * @param transIdNumero liitokseen tuleva transkription id
+     */
+    private void uusiTransliitos(int harjIdNumero, int transIdNumero) {
+        Transliitos uusi = new Transliitos();
+        uusi.setHarjoitusId(harjIdNumero);
+        uusi.setTransId(transIdNumero);
+
+        paivakirja.lisaa(uusi);
+
+
+    }
+
+
+
+    /**
+     * Lis‰t‰‰n uusi harjoitus
+     * @throws IOException  cc
+     */
+    protected void uusiHarjoitus() throws IOException{
+        Harjoitus uusi = new Harjoitus();
+        uusi=MuokkausController.kysyTiedot(null, uusi);
+        if ( uusi == null) return;
+
+        uusi.rekisteroi(); 
+
+        try{
+            paivakirja.lisaa(uusi);
+            hae(uusi.getIdNumero());
+        }catch (SailoException e){
+            Dialogs.showMessageDialog("Ongelmia uuden luomisessa "+e.getMessage());
+            return;
+        }
+
+    }
+
+
+    /**
+     * Kun halutaan muokata valittua harjoitusta menn‰‰n
+     * muokkauskontrollerin kysytiedot -aliohjelmaan.
+     * @throws CloneNotSupportedException 
+     */
+    private void muokkaa() {
+        if (harjoitusKohdalla == null ) return;
+        try {
+            Harjoitus kopio;
+            kopio = MuokkausController.kysyTiedot(null, harjoitusKohdalla.clone());
+            if ( kopio == null ) return;
+            paivakirja.korvaa(kopio);
+            harjoitusKohdalla = kopio;
+
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        hae(harjoitusKohdalla.getIdNumero());
+
+    }
+
+    /**
+     * T‰m‰ aukaisee dialogin transkription lis‰‰miseen. 
+     * Ei viel‰ k‰ytˆss‰.
+     */
+    private void lisaaTranskriptio(){
+        LisaaTranskriptioController.kysyTranskriptio(null,harjoitusKohdalla, paivakirja); 
+        naytaKaikkiTranskriptiot();
+    }
+
+
+    /**
+     * Hakee harjoituksen tiedot listaan
+     * @param hnro haettavan idnumero
+     */
+    protected void hae(int hnro){
+        listdataHarjoitukset.clear();
+        listHarjoitukset.setItems(listdataHarjoitukset);
+        int index=0;
+        for (int i = 0; i < paivakirja.getHarjoituksia(); i++) {
+            Harjoitus harjoitus = paivakirja.annaHarjoitus(i);
+            if(harjoitus.getIdNumero()==hnro) index = i;
+            listdataHarjoitukset.add(harjoitus);
+        }
+        listHarjoitukset.getSelectionModel().select(index);
+    }
+}

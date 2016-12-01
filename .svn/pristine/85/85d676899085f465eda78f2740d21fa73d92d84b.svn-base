@@ -1,0 +1,156 @@
+package fxpaivakirja;
+
+
+import java.io.PrintStream;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.ModalControllerInterface;
+import fi.jyu.mit.fxgui.TextAreaOutputStream;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import paivakirja.Harjoitus;
+import paivakirja.Paivakirja;
+import paivakirja.SailoException;
+import paivakirja.Transkriptio;
+
+/**
+ * Kysyt‰‰n transkriptio ja luodaan t‰t‰ varten dialogi.
+ * 
+ * @author Toni Pikkarainen
+ * @version 12.2.2016
+ */
+public class LisaaTranskriptioController implements ModalControllerInterface<Harjoitus>, Initializable {
+    
+    @FXML private TextField textKappale;
+    @FXML private TextField textArtisti;
+    @FXML private ScrollPane panelHarjoitus;
+    @FXML private Label labelVirhe;
+    
+    //private String vastaus = null;
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle){
+        alusta();
+    }
+    
+    @FXML private void handleOK() {
+        //vastaus = textKappale.getText()+" "+textArtisti.getText();
+        ModalController.closeStage(labelVirhe);
+    }
+
+    
+    /*@FXML private void handleOKuusi() {
+        //vastaus = "Palautetaan valinta"; // t‰h‰n sitten se mik‰ on valittu listasta
+        ModalController.closeStage(labelVirhe);
+    }*/
+
+    
+    @FXML private void handleCancel() {
+        ModalController.closeStage(labelVirhe);
+    }
+    
+    @FXML private void handleLisaa() {
+          uusiTranskriptio();
+    }
+
+
+    //===========================================================================================    
+      // T‰st‰ eteenp‰in ei k‰yttˆliittym‰‰n suoraan liittyv‰‰ koodia  
+    private Harjoitus harjoitusKohdalla;
+    private TextArea areaHarjoitus = new TextArea();
+    private Paivakirja paivakirja;
+    
+    @Override
+    public Harjoitus getResult() {
+        return harjoitusKohdalla;
+    }
+
+    
+    @Override
+    public void setDefault(Harjoitus oletus) {
+        harjoitusKohdalla = oletus;
+        naytaTranskriptio();
+        naytaVirhe("Ei osata viel‰ tehd‰ kunnolla");
+    }
+
+    
+    /**
+     * Mit‰ tehd‰‰n kun dialogi on n‰ytetty
+     */
+    @Override
+    public void handleShown() {
+        textKappale.requestFocus();
+    }
+    
+    
+    /**
+     * Laitetaan panelHarjoitus-kohtaan tekstialue nimelt‰
+     * areaHarjoitus.
+     */
+    private void alusta(){
+        panelHarjoitus.setContent(areaHarjoitus);
+        areaHarjoitus.setFont(new Font ("Courier New", 12));
+        panelHarjoitus.setFitToHeight(true);
+    }
+    
+    
+
+    /**
+     * N‰ytet‰‰n virheteksti
+     * @param virhe teksti joka n‰ytet‰‰n
+     */
+    private void naytaVirhe(String virhe){
+        if(virhe == null || virhe.isEmpty()){
+            labelVirhe.setText("");
+            return;
+        }
+        labelVirhe.setText(virhe);   
+    }
+    
+    
+    /**
+     * N‰ytet‰‰n parametrina syˆtetyn harjoitukseen liittyv‰t transkriptiot tiedot muokkaus-
+     * ikkunassa.
+     */
+    private void naytaTranskriptio(){
+        if(harjoitusKohdalla == null) return;
+        areaHarjoitus.setText("");
+        /*try(PrintStream os =TextAreaOutputStream.getTextPrintStream(areaHarjoitus)){
+            harjoitusKohdalla.tulosta(os);
+        }*/
+    }
+    
+    
+    /**
+     * Lis‰t‰‰n uusi transkriptio
+     */
+    protected void uusiTranskriptio(){
+        Transkriptio uusi = new Transkriptio();
+        uusi.vastaaBad();//TODO aukaise dialogi
+        uusi.rekisteroi(); //TODO rekisterˆi vasta kun hyv‰ksyt‰‰n
+        paivakirja.lisaa(uusi);
+        
+        //hae(uusi.getIdNumero());
+    }
+    
+    /**
+     * Luodaan nimenkysymisdialogi ja palautetaan siihen kirjoitettu nimi tai null
+     * @param modalityStage mille ollaan modaalisia, null = sovellukselle
+     * @param oletus Tuodaan harjoitus, jonka kohdalla ollaan
+     * @return null jos painetaan Cancel, muuten kirjoitettu nimi
+     */
+    public static Harjoitus kysyTranskriptio(Stage modalityStage, Harjoitus oletus) {
+        return ModalController.showModal(
+                PaivakirjanNimiController.class.getResource("LisaaTranskriptioView.fxml"),
+                "Paivakirja", modalityStage, oletus);
+    }
+}

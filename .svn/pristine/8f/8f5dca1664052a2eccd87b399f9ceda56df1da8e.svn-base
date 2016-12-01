@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import fi.jyu.mit.fxgui.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxpaivakirja.PaivakirjaGUIController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Tiedosto">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleAvausikkuna" text="Avaa" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLuoUusi" text="Uusi" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLaske" text="Laske keskiarvo/summa" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Muokkaa">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleUusiHarjoitus" text="Lisää harjoitus" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaHarjoitus" text="Poista harjoitus" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLisaaTranskriptio" text="Lisää transkriptio" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaTranskriptio" text="Poista transktiptio" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLisaaArpeggio" text="Lisää arpeggio" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaArpeggio" text="Poista arpeggio" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Apua">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Tietoja" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOhje" text="Ohje" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.5, 0.5, 0.5" BorderPane.alignment="CENTER">
+         <items>
+            <BorderPane maxWidth="100.0" minWidth="100.0" prefHeight="200.0" prefWidth="100.0">
+               <top>
+                  <Label text="Päivämäärä" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <ListChooser fx:id="chooserHarjoitukset" rivit="01.01.2016&#10;02.01.2016 &#10;05.01.2016&#10;" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <VBox BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" maxWidth="300.0" text="Hakuehto" />
+                        <ComboBoxChooser maxWidth="300.0" rivit="Päivämäärä&#10;kesto&#10;soinnut&#10;säveltapailu&#10;tekniikka" />
+                        <TextField />
+                     </children>
+                  </VBox>
+               </bottom>
+            </BorderPane>
+            <BorderPane maxWidth="200.0" minWidth="170.0" prefWidth="170.0">
+               <top>
+                  <Label text="Harjoituksen tiedot" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <ScrollPane fx:id="panelHarjoitus" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <content>
+                        <GridPane hgap="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <Label text="Kesto (min)" GridPane.rowIndex="1" />
+                              <Label text="Soinnut" GridPane.rowIndex="2" />
+                              <Label text="Säveltapailu" GridPane.rowIndex="3" />
+                              <Label text="Tekniikka" GridPane.rowIndex="4" />
+                              <TextField text="120" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                              <TextField layoutX="94.0" layoutY="23.0" text="Billies Bounce" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField layoutX="94.0" layoutY="83.0" text="Pikkaus" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Päivämäärä" />
+                              <TextField text="01.01.2016" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="panelTranskriptio" maxWidth="260.0" minWidth="100.0">
+               <top>
+                  <Label text="Transkriptiot" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <StringGrid rivit="kappale|artisti&#10;Bad Mama|Teemu Viinikainen&#10;So Not|Teemu Viinikainen&#10;" BorderPane.alignment="CENTER">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </StringGrid>
+               </center>
+               <bottom>
+                  <HBox spacing="10.0" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleLisaaTranskriptio" text="Lisää" />
+                        <Button mnemonicParsing="false" onAction="#handlePoistaTranskriptio" text="Poista" />
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+            <BorderPane maxWidth="260.0" minWidth="160.0">
+               <top>
+                  <Label text="Arpeggiot" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <StringGrid rivit="kappale|tyyli|sävelet&#10;Solar|Asemissa|1 3 5 7&#10;Billies Bounce|Yhdellä kielellä| 5 7 9 11&#10;" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <HBox spacing="10.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </BorderPane.margin>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleLisaaArpeggio" text="Lisää" />
+                        <Button mnemonicParsing="false" onAction="#handlePoistaArpeggio" text="Poista" />
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </center>
+   <bottom>
+      <HBox spacing="10.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <children>
+            <Button onAction="#handleUusiHarjoitus" text="_Lisää harjoitus">
+               <tooltip>
+                  <Tooltip text="Lisää uuden harjoituksen" />
+               </tooltip>
+            </Button>
+            <Button onAction="#handleTallenna" text="Tallenna">
+               <tooltip>
+                  <Tooltip text="Tallentaa tiedot" />
+               </tooltip>
+            </Button>
+            <Button layoutX="116.0" layoutY="10.0" onAction="#handleMuokkaa" text="Muokkaa">
+               <tooltip>
+                  <Tooltip text="Tallentaa tiedot" />
+               </tooltip>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

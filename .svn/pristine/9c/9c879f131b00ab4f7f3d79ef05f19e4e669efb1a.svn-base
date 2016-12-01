@@ -1,0 +1,136 @@
+package paivakirja;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Luokka huolehtii joukosta transkriptioita
+ * @author tonipikkarainen
+ * @version 29.2.2016
+ *
+ */
+public class Transkriptiot implements Iterable<Transkriptio>{
+    
+    private final Collection<Transkriptio> alkiot = new ArrayList<Transkriptio>();
+    
+    /**
+     * Lis‰t‰‰n transkriptio listaan
+     * @param transkriptio lis‰tt‰v‰
+     */
+    public void lisaa(Transkriptio transkriptio){
+        alkiot.add(transkriptio);
+    }
+    
+    
+    /**
+     * Haetaan tallennettujen alkioiden lukum‰‰r‰
+     * @return lukum‰‰r‰ kokonaislukuna
+     */
+    public int getLukumaara(){
+        return alkiot.size();
+    }
+    
+    
+    /**
+     * Palauttaa kaikki transkriptiot
+     * @return kaikki transkriptiot
+     */
+    public List<Transkriptio> getAlkiot(){
+        List<Transkriptio> kaikki = new ArrayList<Transkriptio>();
+        for(Transkriptio trans : alkiot){
+            kaikki.add(trans);
+        }
+        return kaikki;
+    }
+    
+    
+    
+    
+    /**
+     * Haetaan tietty‰ id:t‰ vastaava transkriptio
+     * @param idNumero mit‰ id:t‰ haetaan
+     * @return transkriptio joka vastaa tietty‰ id:t
+     */
+    public Transkriptio anna(int idNumero){
+        for( Transkriptio vastaa : alkiot){
+            if (vastaa.getIdNumero() == idNumero) return vastaa;
+        }
+        return null;
+    }
+  
+ 
+    /**
+     * Iteraattori transkriptioiden l‰pi k‰ymiseen
+     * @return iteraattori
+     * @example
+     * <pre name="test">
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * Transkriptiot trans = new Transkriptiot();
+     * Transkriptio t1 = new Transkriptio(); t1.rekisteroi(); trans.lisaa(t1);
+     * Transkriptio t2 = new Transkriptio(); t2.rekisteroi(); trans.lisaa(t2);
+     * Transkriptio t3 = new Transkriptio(); t3.rekisteroi(); trans.lisaa(t3);
+     * Transkriptio t4 = new Transkriptio(); t4.rekisteroi(); trans.lisaa(t4);
+     * 
+     * Iterator<Transkriptio> transi = trans.iterator();
+     * transi.next() === t1;
+     * transi.next() === t2;
+     * transi.next() === t3;
+     * transi.next() === t4;
+     * 
+     * int[] taulukko = {1, 2, 3, 4};
+     * int i = 0;
+     * 
+     * for ( Transkriptio t : trans){
+     *     t.getIdNumero() === taulukko[i];
+     *     i++;
+     *  }
+     *  
+     * trans.anna(1) === t1;
+     * trans.anna(5) === null;
+     * 
+     * List<Transkriptio> kaikki = trans.getAlkiot();
+     * kaikki.size() === 4;
+     * 
+     * </pre>
+     */
+    @Override
+    public Iterator<Transkriptio> iterator() {
+        return alkiot.iterator();
+    }
+
+
+    /**
+     * kokeilup‰‰ohjelma
+     * @param args ei k‰ytˆss‰
+     */
+    public static void main(String[] args) {
+        Transkriptiot transkriptiot = new Transkriptiot();
+         
+        Transkriptio badmama1 = new Transkriptio();
+        Transkriptio badmama2 = new Transkriptio();
+        
+        badmama1.vastaaBad();
+        badmama2.vastaaBad();
+        
+        badmama1.rekisteroi();
+        badmama2.rekisteroi();
+
+        transkriptiot.lisaa(badmama1);
+        transkriptiot.lisaa(badmama2);
+        
+        
+        System.out.println("===== transkriptiot-testi =====");
+        for(int i = 0; i < transkriptiot.getLukumaara(); i++){
+            Transkriptio transkriptio = transkriptiot.anna(i);
+            System.out.println("Transkriptio numero: "+i);
+            transkriptio.tulosta(System.out);
+        }
+    }
+
+    
+   
+
+}

@@ -1,0 +1,256 @@
+package fxpaivakirja;
+
+
+import java.io.PrintStream;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ListChooser;
+import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.ModalControllerInterface;
+import fi.jyu.mit.fxgui.TextAreaOutputStream;
+import fxpaivakirja.PaivakirjaGUIController.CellHarjoitus;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import paivakirja.Harjoitus;
+import paivakirja.Paivakirja;
+import paivakirja.SailoException;
+import paivakirja.Transkriptio;
+import paivakirja.Transliitos;
+
+/**
+ * Kysyt‰‰n transkriptio ja luodaan t‰t‰ varten dialogi.
+ * 
+ * @author Toni Pikkarainen
+ * @version 12.2.2016
+ */
+public class LisaaTranskriptioController implements ModalControllerInterface<Harjoitus>, Initializable {
+
+    @FXML private ListChooser chooserTranskriptiot;
+    @FXML private ScrollPane panelTranskriptio;
+
+    @FXML private TextField textKappale;
+    @FXML private TextField textArtisti;
+
+    @FXML private Label labelVirhe;
+
+    //private String vastaus = null;
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle){
+        alusta();
+    }
+
+    @FXML private void handleOK() {
+        //vastaus = textKappale.getText()+" "+textArtisti.getText();
+        ModalController.closeStage(labelVirhe);
+    }
+
+
+    /*@FXML private void handleOKuusi() {
+        //vastaus = "Palautetaan valinta"; // t‰h‰n sitten se mik‰ on valittu listasta
+        ModalController.closeStage(labelVirhe);
+    }*/
+
+
+    @FXML private void handleLisaaValittu() {
+        liitaValittu();
+    }
+
+    @FXML private void handleLisaa() {
+        uusiTranskriptio();
+    }
+
+
+    //===========================================================================================    
+    // T‰st‰ eteenp‰in ei k‰yttˆliittym‰‰n suoraan liittyv‰‰ koodia  
+    private Harjoitus harjoitusKohdalla;
+    private Transkriptio transkriptioKohdalla;
+    private TextArea areaTranskriptio = new TextArea();
+    private ListView<Transkriptio> listTranskriptiot = new ListView<Transkriptio>();
+    private ObservableList<Transkriptio> listdataTranskriptiot = FXCollections.observableArrayList();
+
+    private static Paivakirja paivakirja;
+
+    @Override
+    public Harjoitus getResult() {
+        return null;
+    }
+
+
+    @Override
+    public void setDefault(Harjoitus oletus) {
+        harjoitusKohdalla = oletus;
+        naytaTranskriptioKaikki();
+        //naytaTranskriptio();
+        //naytaVirhe("Ei osata viel‰ tehd‰ kunnolla");
+    }
+
+
+    /**
+     * Mit‰ tehd‰‰n kun dialogi on n‰ytetty
+     */
+    @Override
+    public void handleShown() {
+        textKappale.requestFocus();
+    }
+
+
+    public static class CellTranskriptio extends ListCell<Transkriptio>{
+        @Override protected void updateItem(Transkriptio item, boolean empty){
+            super.updateItem(item, empty);
+            setText(empty ? "" :item.getKappale());
+        }
+    }
+
+
+    /**
+     * Laitetaan panelHarjoitus-kohtaan tekstialue nimelt‰
+     * areaHarjoitus.
+     */
+    private void alusta(){
+
+        //ScrollPane parent =(ScrollPane)chooserTranskriptiot.getParent();
+        panelTranskriptio.setContent(listTranskriptiot);
+        listTranskriptiot.setCellFactory(p -> new CellTranskriptio());
+
+        listTranskriptiot.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
+            ilmoitaValittu();
+        });
+
+        /*panelTranskriptio.setContent(areaTranskriptio);
+        areaTranskriptio.setFont(new Font ("Courier New", 12));*/
+
+        /*listTranskriptiot.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
+            naytaTranskriptio();
+        });*/
+    }
+
+    private void ilmoitaValittu(){
+        transkriptioKohdalla = listTranskriptiot.getSelectionModel().getSelectedItem();
+    }
+
+    private void liitaValittu(){
+        if (transkriptioKohdalla == null) return;
+
+        uusiTransliitos(harjoitusKohdalla.getIdNumero(), transkriptioKohdalla.getIdNumero());
+    }
+
+
+    /**
+     * N‰ytet‰‰n virheteksti
+     * @param virhe teksti joka n‰ytet‰‰n
+     */
+    private void naytaVirhe(String virhe){
+        if(virhe == null || virhe.isEmpty()){
+            labelVirhe.setText("");
+            return;
+        }
+        labelVirhe.setText(virhe);   
+    }
+
+
+    /**
+     * N‰ytet‰‰n parametrina syˆtetyn harjoitukseen liittyv‰t transkriptiot tiedot muokkaus-
+     * ikkunassa.
+     */
+    private void naytaTranskriptioKaikki(){
+        //if(harjoitusKohdalla == null) return;
+        /*
+        areaTranskriptio.setText("");
+        for (int i = 0; i < paivakirja.getTranskriptiota(); i++) {
+            try(PrintStream os =TextAreaOutputStream.getTextPrintStream(areaTranskriptio)){
+                paivakirja.annaTranskriptiot(i).tulosta(os);
+            }
+        }
+         */
+        listdataTranskriptiot.clear();
+
+        for (int i = 0; i < paivakirja.getTranskriptiota(); i++) {
+            Transkriptio transkriptio = paivakirja.annaTranskriptiot(i);
+            listdataTranskriptiot.add(transkriptio);
+        }
+
+        listTranskriptiot.setItems(listdataTranskriptiot);
+
+
+
+        //listTranskriptiot.getSelectionModel().select(0);
+        /*try(PrintStream os =TextAreaOutputStream.getTextPrintStream(areaHarjoitus)){
+            harjoitusKohdalla.tulosta(os);
+        }*/
+    }
+
+
+    private void naytaTranskriptio(Transkriptio naytettava){
+        if(harjoitusKohdalla == null) return;
+        if(naytettava == null) return;
+        //areaTranskriptio.setText("");
+        /*try(PrintStream os =TextAreaOutputStream.getTextPrintStream(areaTranskriptio)){
+            naytettava.tulosta(os);}   */
+        listdataTranskriptiot.add(naytettava);
+    }
+
+    /**
+     * Lis‰t‰‰n uusi transkriptio
+     */
+    protected void uusiTranskriptio(){
+        Transkriptio uusi = new Transkriptio();
+        uusi.vastaaBad();//TODO aukaise dialogi
+        uusi.rekisteroi(); //TODO rekisterˆi vasta kun hyv‰ksyt‰‰n
+        paivakirja.lisaa(uusi);
+
+        uusiTransliitos(harjoitusKohdalla.getIdNumero(), uusi.getIdNumero());
+
+        naytaTranskriptio(uusi);
+
+        //hae(uusi.getIdNumero());
+    }
+
+    /**
+     * Lis‰t‰‰n uusi transkription ja harjoituksen v‰linen liitos.
+     * @param harjIdNumero liitokseen tuleva harjoituksen id
+     * @param transIdNumero liitokseen tuleva transkription id
+     */
+    private void uusiTransliitos(int harjIdNumero, int transIdNumero) {
+        Transliitos uusi = new Transliitos();
+        uusi.setHarjoitusId(harjIdNumero);
+        uusi.setTransId(transIdNumero);
+
+        paivakirja.lisaa(uusi);
+
+
+    }
+
+
+    /**
+     * Luodaan nimenkysymisdialogi ja palautetaan siihen kirjoitettu nimi tai null
+     //* @param modalityStage mille ollaan modaalisia, null = sovellukselle
+     * @param modalityStage ffs
+     * @param oletus fsfs
+     //* @param paivakirja nfgn
+     //* @param harjoitus ddd
+     * @param p ggs
+     * @return null jos painetaan Cancel, muuten kirjoitettu nimi
+     */
+    public static Harjoitus kysyTranskriptio(Stage modalityStage,Harjoitus oletus, Paivakirja p) {
+        if(oletus == null) return null;
+        paivakirja = p;
+
+        return  ModalController.showModal(
+                LisaaTranskriptioController.class.getResource("LisaaTranskriptioView.fxml"),
+                "Paivakirja",modalityStage,oletus);
+    }
+}

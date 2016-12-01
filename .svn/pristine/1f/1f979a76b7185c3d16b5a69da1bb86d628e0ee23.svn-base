@@ -1,0 +1,143 @@
+package fxpaivakirja;
+
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import fi.jyu.mit.fxgui.*;
+
+
+/**
+ * Harjoitusp‰iv‰kirjan k‰sittelij‰luokka
+ * @author tonipikkarainen
+ * @version 13.1.2016
+ *
+ */
+public class PaivakirjaGUIController {
+
+    private String paivakirja = "tonipikkarainen";
+
+    /**
+     * K‰sitell‰‰n uuden j‰senen lis‰‰minen
+     */
+    @FXML private void handleUusiHarjoitus() {
+        MuokkausController.kysyTiedot(null);
+    }
+
+
+    @FXML private void handlePoistaHarjoitus() {
+        Dialogs.showMessageDialog("Ei osata viel‰ poistaa harjoitusta.");
+    }
+    
+    
+    @FXML private void handleLuoUusi() {
+        Dialogs.showInputDialog("Anna uuden p‰iv‰kirjan nimi", "nimi");
+    }
+
+
+
+    @FXML private void handleLisaaTranskriptio() {
+        String transkriptio= LisaaTranskriptioController.kysyTranskriptio(null);
+        Dialogs.showMessageDialog(transkriptio);
+    }
+
+
+    @FXML private void handlePoistaTranskriptio() {
+        Dialogs.showMessageDialog("Ei osata viel‰ poistaa transkriptiota.");
+    }
+
+
+    @FXML private void handleLisaaArpeggio() {
+        String arpeggio= LisaaArpeggioController.kysyArpeggio(null);
+        Dialogs.showMessageDialog(arpeggio);
+    }
+
+
+    @FXML private void handlePoistaArpeggio() {
+        Dialogs.showMessageDialog("Ei osata viel‰ poistaa arpeggiota.");
+    }
+
+
+    @FXML private void handleTietoja() {
+        ModalController.showModal(PaivakirjaGUIController.class.getResource("TietojaView.fxml"), "P‰iv‰kirja", null, "");
+    }
+
+    /**
+     * Tallentaminen
+     */
+    @FXML private void handleTallenna() {
+        tallenna();
+    }
+
+
+    /**
+     * K‰sitell‰‰n lopetus
+     */
+    @FXML private void handleLopeta() {
+        tallenna();
+        Platform.exit();
+    }
+
+
+    @FXML private void handleOhje() {
+        avustus();
+    }
+    
+    
+    @FXML private void handleLaske() {
+        Dialogs.showMessageDialog("Ei osata viel‰ laskea.");
+    }
+    
+    
+    @FXML private void handleTulosta() {
+        Dialogs.showMessageDialog("Ei osata viel‰ tulostaa. Tulostetaan hakuehdon t‰ytt‰v‰t harjoitukset.");
+    }
+    
+
+    /**
+     * K‰sitell‰‰n uuden p‰iv‰kirjan avausikkunan avaus, jossa
+     * voi myˆs luoda uuden p‰iv‰kirjan, HUOM! Saako muuttaa sen verran ett‰ teen
+     * uuden p‰iv‰kirjan luomiselle oman ikkunan...?
+     */
+    @FXML private void handleAvausikkuna() {
+        String paivakirjanNimi = PaivakirjanNimiController.kysyNimi(null, paivakirja);
+        Dialogs.showMessageDialog(paivakirjanNimi);
+    }
+
+    //===========================================================================================    
+    // T‰st‰ eteenp‰in ei k‰yttˆliittym‰‰n suoraan liittyv‰‰ koodia    
+    /**
+     * Tarkistetaan onko tallennus tehty
+     * @return true jos saa sulkea sovelluksen, false jos ei
+     */
+    public boolean voikoSulkea() {
+        tallenna();
+        return true;
+    }
+
+
+    /**
+     * Tietojen tallennus
+     */
+    private void tallenna() {
+        Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi viel‰");
+    }
+
+
+    private void avustus() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://trac.cc.jyu.fi/projects/ohj2ht/wiki/k2016/suunnitelmat/totapikk");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+        } catch (IOException e) {
+            return;
+        }
+    }
+
+}

@@ -1,0 +1,247 @@
+package paivakirja;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * Luokka hoitaa transkriptio-harjoitus-liitosten joukkoa
+ * @author tonipikkarainen
+ * @version 29.2.2016
+ *
+ */
+public class Transliitokset {
+    private ArrayList<Transliitos> alkiot = new ArrayList<Transliitos>();
+    private String tiedostonPerusNimi = "transliitokset";
+
+
+    /**
+     * Lis‰t‰‰n transkriptioliitos listaan
+     * @param transliitos lis‰tt‰v‰
+     */
+    public void lisaa(Transliitos transliitos){
+        alkiot.add(transliitos);
+    }
+
+
+    /**
+     * Haetaan tallennettujen alkioiden lukum‰‰r‰
+     * @return lukum‰‰r‰ kokonaislukuna
+     */
+    public int getLukumaara(){
+        return alkiot.size();
+    }
+
+
+    /**
+     * Asettaa tiedoston perusnimen
+     * eli ei p‰‰tett‰
+     * @param nimi nimi
+     */
+    public void setTiedostonPerusNimi(String nimi) {
+        tiedostonPerusNimi = nimi;   
+    }
+
+
+    /**
+     * Haetaan tietty transliitos alkioista
+     * @param i mist‰ paikasta transliitos haetaan
+     * @return transliitos tietyst‰ paikastas
+     * @throws IndexOutOfBoundsException jos annetaan v‰‰r‰nlainen indeksi
+     * @example
+     * <pre name="test">
+     * Transliitokset transliitokset =new Transliitokset();
+     * Transliitos liitos1 = new Transliitos();
+     * Transliitos liitos2 = new Transliitos();
+     * liitos1.vastaaMalli();
+     * liitos2.vastaaMalli();
+     * 
+     * transliitokset.lisaa(liitos1);
+     * transliitokset.lisaa(liitos2);
+     * transliitokset.getLukumaara() === 2;
+     * transliitokset.lisaa(liitos1);
+     * 
+     * transliitokset.getLukumaara() === 3;
+     * transliitokset.anna(0) === liitos1;
+     * transliitokset.anna(1) === liitos2;
+     * 
+     * transliitokset.anna(3) === liitos1; #THROWS IndexOutOfBoundsException
+     * </pre>
+     */
+    public Transliitos anna(int i) throws IndexOutOfBoundsException {
+        if (i<0 || alkiot.size() <= i)
+            throw new IndexOutOfBoundsException("V‰‰r‰n suuruinen indeksi: " + i);
+        return alkiot.get(i);
+    }
+
+
+    /**
+     * Antaa tallennusnimen
+     * @return tallennusnimi
+     */
+    private String getTiedostonNimi() {
+        return getTiedostonPerusnimi()+".dat";
+    }
+
+
+    /**
+     * antaa tiedoston nimen ilman p‰‰tett‰
+     * @return nimi ilman p‰‰tett‰
+     */
+    private String getTiedostonPerusnimi() {
+        return tiedostonPerusNimi;
+    }
+
+
+    /**
+     * Lukee transliitokset
+     * @param nimi tiedoston nimi
+     * @throws SailoException jos ei aukea
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * #import java.io.File;
+     * Transliitokset liitostesti = new Transliitokset();
+     * Transliitos l1 = new Transliitos();
+     * Transliitos l2 = new Transliitos();
+     * l1.setHarjoitusId(3);
+     * l2.setHarjoitusId(5);
+     * 
+     * l1.setTransId(1);
+     * l2.setTransId(2);
+     * String hakemisto = "pvkliitostesti";
+     * String tnimi = hakemisto+"/transliitokset";
+     * File dir = new File(hakemisto);
+     * File tiedosto = new File(tnimi+".dat");
+     * dir.mkdir();
+     * tiedosto.delete();
+     * liitostesti.haeTransliitokset(tnimi); #THROWS SailoException
+     * liitostesti.lisaa(l1);
+     * liitostesti.lisaa(l2);
+     * liitostesti.tallenna();
+     * liitostesti = new Transliitokset();
+     * liitostesti.haeTransliitokset(tnimi);
+     * 
+     * liitostesti.anna(0).toString().equals(l1.toString()) === true;
+     * liitostesti.anna(1).toString().equals(l2.toString()) === true;
+     * 
+     * tiedosto.delete() === true;
+     * dir.delete() === true;
+     * 
+     * </pre>
+     */
+    public void haeTransliitokset(String nimi) throws SailoException {
+        setTiedostonPerusNimi(nimi);
+        try(Scanner fi = new Scanner(new FileInputStream(new File(getTiedostonNimi())))){
+            while(fi.hasNext()){
+                String rivi = fi.nextLine();
+                rivi = rivi.trim();
+                Transliitos tliitos = new Transliitos();
+                tliitos.asetaKentat(rivi);
+                lisaa(tliitos); 
+            }
+        }catch (FileNotFoundException e){
+            throw new SailoException("Tiedosto ei aukea.");
+        }      
+    }
+
+
+    /**
+     * Hakee tiedoston nime‰ vastaavat harjoitukset
+     * @throws SailoException jos liikaa j‰seni‰
+     */
+    public void haeTransliitokset() throws SailoException{
+        haeTransliitokset(getTiedostonPerusnimi());
+    }
+
+
+    /**
+     * Poistaa liitoksen
+     * @param hid liitoksen harjoitus id
+     * @param tid liitoksen transkriptio id
+     */
+    public void poistaLiitos(int hid, int tid) {
+        int i = 0;
+        for(Transliitos t : alkiot){
+            if( t.getHarjoitusId() == hid && t.getTransId() == tid){
+                alkiot.remove(i);
+                return;
+            }
+
+            i++;
+        }
+    }
+
+
+    /**
+     * Poistaa kaikki harjoitukseen liittyv‰t liitokset
+     * @param hid liitoksen harjoitus id
+     */
+    public void poistaLiitos(int hid) {
+
+        int i = 0;
+        while(i < this.getLukumaara()){
+            if(alkiot.get(i).getHarjoitusId() == hid){
+                alkiot.remove(i);
+                continue;
+            }
+            i++;
+        }      
+    }
+
+
+    /**
+     * Tallennus
+     * @throws SailoException  jos ei onnistu
+     */
+    public void tallenna() throws SailoException  {
+        File tiedNimi = new File(getTiedostonNimi());
+        try( PrintWriter fo = new PrintWriter(new FileWriter(tiedNimi.getCanonicalPath()))) {     
+            for(Transliitos t : alkiot){
+                fo.println(t);     
+            }
+        }
+        catch ( FileNotFoundException ex){
+            System.err.println("Tiedosto ei aukea: " + ex.getMessage());
+        } catch (IOException e) {
+
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+
+    /**
+     * Kokeilup‰‰ohjelma
+     * @param args ei k‰ytˆss‰
+     */
+    public static void main(String[] args) {
+        Transliitokset transliitokset =new Transliitokset();
+
+        Transliitos liitos1 = new Transliitos();
+        Transliitos liitos2 = new Transliitos();
+
+        liitos1.vastaaMalli();
+        liitos2.vastaaMalli();
+
+        transliitokset.lisaa(liitos1);
+        transliitokset.lisaa(liitos2);
+        transliitokset.lisaa(liitos1);
+        transliitokset.lisaa(liitos1);
+
+        System.out.println("===== transliitokset-testi =====");
+        for(int i = 0; i < transliitokset.getLukumaara(); i++){
+            Transliitos transliitos = transliitokset.anna(i);
+            System.out.println("Transliitos numero: "+i);
+            transliitos.tulosta();
+
+        }
+
+    }
+
+}

@@ -1,0 +1,115 @@
+
+package paivakirja;
+
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.Date;
+
+
+
+
+/**
+ * Luokka yksittäisille harjoituksille. 
+ * Annetaan harjoitukselle esim. id-numero.
+ * @author tonipikkarainen
+ * @version 23.2.2016
+ *
+ */
+public class Harjoitus {
+    
+    private int idNumero;
+    private Date pvm;
+    private String soinnut;
+    private String saveltapailu;
+    private String tekniikka;
+    private int kesto_min;
+    
+    private static int seuraavaId=1;
+
+    /**
+     * Tulostus
+     * @param os mihin tulostetaan
+     */
+    public void tulosta(OutputStream os){
+        tulosta(new PrintStream(os));
+    }
+    
+    
+    /**
+     * Tulostetaan harjoituksen tiedot
+     * @param out mihin tulostetaan
+     */
+    public void tulosta(PrintStream out){
+        out.println(String.format("%03d", idNumero)+" "+kanta.Arpominen.rand(1000,9999));
+        out.println(" "+kanta.Arpominen.arvoPvm());
+        out.println(" "+soinnut);
+        out.println(" "+saveltapailu);
+        out.println(" "+tekniikka);
+        out.println(" "+
+        String.format("%03d", kanta.Arpominen.rand(30,180)));       
+    }
+    
+    
+    /**
+     * Selvitetään id
+     * @return id kokonaislukuna
+     */
+    public int getIdNumero(){
+        return idNumero;
+    }
+    
+    /**
+     * Rekistöidään harjoitus, kasvatetaan id:tä
+     * @return idNumero (kokonaisluku)
+     * @example
+     * <pre name="test">
+     * Harjoitus harj1 = new Harjoitus();
+     * harj1.getIdNumero() === 0;
+     * harj1.rekisteroi();
+     * Harjoitus harj2 = new Harjoitus();
+     * harj2.rekisteroi();
+     * int a = harj1.getIdNumero();
+     * int b = harj2.getIdNumero();
+     * b - a === 1;
+     * </pre>
+     */
+    public int rekisteroi() {
+        if(idNumero > 0) return idNumero;
+        idNumero = seuraavaId;
+        seuraavaId++;
+        return idNumero;
+    }
+    
+    
+    /**
+     * Ekaa harjoitusta vastaavat tiedot
+     */
+    public void vastaaEkaHarj(){
+        soinnut = "Billie´s Bounce";
+        saveltapailu = "";
+        tekniikka = "pikkaus";
+        kesto_min = 150;
+    }
+    
+    /**
+     * @param args ei käytössä
+     */
+    public static void main(String[] args) {
+    Harjoitus harj1 = new Harjoitus();
+    Harjoitus harj2 = new Harjoitus();
+    
+    harj1.rekisteroi();
+    harj2.rekisteroi();
+    
+    harj1.vastaaEkaHarj();
+    harj2.vastaaEkaHarj();
+    
+    harj1.tulosta(System.out);
+    harj2.tulosta(System.out);
+    
+    }
+
+
+   
+
+}

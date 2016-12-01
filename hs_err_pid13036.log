@@ -1,0 +1,628 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00000000552a2fb8, pid=13036, tid=4696
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_77-b03) (build 1.8.0_77-b03)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.77-b03 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# V  [jvm.dll+0x42fb8]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000000149ad000):  JavaThread "C2 CompilerThread0" daemon [_thread_in_vm, id=4696, stack(0x0000000015fe0000,0x00000000160e0000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000000000008
+
+Registers:
+RAX=0x00000000149ad000, RBX=0x00000000ca57ffd8, RCX=0x00000000ca57ffd8, RDX=0x00000000ca57ffd8
+RSP=0x00000000160dd660, RBP=0x000000001e830aa0, RSI=0x00000000ca57ffd8, RDI=0x0000000000000000
+R8 =0x0000000000000000, R9 =0x00000000000000bc, R10=0x000000001e830cd0, R11=0x000000001792f550
+R12=0x00000000149ad000, R13=0x000000001e830aa0, R14=0x000000001c7b7470, R15=0x000000001c7baf90
+RIP=0x00000000552a2fb8, EFLAGS=0x0000000000010202
+
+Top of Stack: (sp=0x00000000160dd660)
+0x00000000160dd660:   000000002aeb8890 000000001e82df50
+0x00000000160dd670:   0000000014977e20 00000000557872be
+0x00000000160dd680:   000000001752c828 0000000055474b9f
+0x00000000160dd690:   0000000016b819e0 0000000000000001
+0x00000000160dd6a0:   0000000000000162 00000000552a3349
+0x00000000160dd6b0:   000000001b524480 000000005534ba2b
+0x00000000160dd6c0:   00000000000000bc 000000001c7bb100
+0x00000000160dd6d0:   0000000014976690 000000001c7bb0f0
+0x00000000160dd6e0:   0000000000000000 000000005529f030
+0x00000000160dd6f0:   000000001c7bb100 00000000ca57ffd8
+0x00000000160dd700:   0000000000000008 0000000055789711
+0x00000000160dd710:   000000001c7bb100 000000005529ff81
+0x00000000160dd720:   0000000000000120 000000001b524480
+0x00000000160dd730:   000000001c7bb0f0 00000000201c2088
+0x00000000160dd740:   00000000fffffffc 000000001c05b3a0
+0x00000000160dd750:   000000001c2f47a0 00000000149ad000 
+
+Instructions: (pc=0x00000000552a2fb8)
+0x00000000552a2f98:   00 48 8b da ff 15 4e 14 59 00 44 0f b6 05 2a 59
+0x00000000552a2fa8:   7a 00 4c 8b e0 45 84 c0 74 39 4c 8b 03 48 8b cb
+0x00000000552a2fb8:   41 ff 50 08 84 c0 74 2b 83 7b 08 00 7e 25 0f b6
+0x00000000552a2fc8:   83 0e 01 00 00 c0 e8 03 a8 01 74 17 48 8b 03 48 
+
+
+Register to memory mapping:
+
+RAX=0x00000000149ad000 is a thread
+RBX=
+[error occurred during error reporting (printing register info), id 0xc0000005]
+
+Stack: [0x0000000015fe0000,0x00000000160e0000],  sp=0x00000000160dd660,  free space=1013k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x42fb8]
+V  [jvm.dll+0x43349]
+V  [jvm.dll+0x3f030]
+V  [jvm.dll+0x3ff81]
+V  [jvm.dll+0x3ad01]
+V  [jvm.dll+0x4fa434]
+V  [jvm.dll+0x454440]
+V  [jvm.dll+0x4793e6]
+V  [jvm.dll+0x5012e7]
+V  [jvm.dll+0x4f9e67]
+V  [jvm.dll+0x4fa1e9]
+V  [jvm.dll+0x4fa77f]
+V  [jvm.dll+0x454440]
+V  [jvm.dll+0x4793e6]
+V  [jvm.dll+0x5012e7]
+V  [jvm.dll+0x4f9e67]
+V  [jvm.dll+0x4fa1e9]
+V  [jvm.dll+0x4fa77f]
+V  [jvm.dll+0x454440]
+V  [jvm.dll+0x470125]
+V  [jvm.dll+0x453492]
+V  [jvm.dll+0xa4ae2]
+V  [jvm.dll+0xa541f]
+V  [jvm.dll+0x243434]
+V  [jvm.dll+0x29a27a]
+C  [MSVCR100.dll+0x21d9f]
+C  [MSVCR100.dll+0x21e3b]
+C  [KERNEL32.DLL+0x13d2]
+C  [ntdll.dll+0x154e4]
+
+
+Current CompileTask:
+C2:11497703 33937       4       org.eclipse.jface.action.MenuManager::update (595 bytes)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00000000175d8800 JavaThread "Worker-73" [_thread_blocked, id=7812, stack(0x0000000040c30000,0x0000000040d30000)]
+  0x00000000175db800 JavaThread "Recommenders-Bus-Thread-138" daemon [_thread_blocked, id=9632, stack(0x000000003db10000,0x000000003dc10000)]
+  0x00000000175db000 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=6368, stack(0x000000003ce20000,0x000000003cf20000)]
+  0x00000000175dd000 JavaThread "Recommenders-Bus-Thread-137" daemon [_thread_blocked, id=764, stack(0x000000003af30000,0x000000003b030000)]
+  0x00000000175c6800 JavaThread "Recommenders-Bus-Thread-136" daemon [_thread_blocked, id=6592, stack(0x0000000040e30000,0x0000000040f30000)]
+  0x00000000175dc800 JavaThread "Worker-72" [_thread_blocked, id=7124, stack(0x000000003de10000,0x000000003df10000)]
+  0x00000000175de800 JavaThread "Worker-71" [_thread_blocked, id=4784, stack(0x000000003dc10000,0x000000003dd10000)]
+  0x00000000175d9800 JavaThread "org.eclipse.wst.sse.ui.internal.reconcile.StructuredRegionProcessor" daemon [_thread_blocked, id=10836, stack(0x0000000040b30000,0x0000000040c30000)]
+  0x00000000175c9800 JavaThread "org.eclipse.wst.sse.ui.internal.reconcile.StructuredRegionProcessor" daemon [_thread_blocked, id=10376, stack(0x0000000039320000,0x0000000039420000)]
+  0x00000000175da000 JavaThread "Process monitor" daemon [_thread_in_native, id=7344, stack(0x0000000041140000,0x0000000041240000)]
+  0x00000000175d5800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=6280, stack(0x0000000041040000,0x0000000041140000)]
+  0x00000000175d8000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11520, stack(0x0000000040f40000,0x0000000041040000)]
+  0x00000000175cb000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11900, stack(0x000000003dd10000,0x000000003de10000)]
+  0x00000000175c8000 JavaThread "Worker-70" [_thread_blocked, id=3924, stack(0x000000003cf90000,0x000000003d090000)]
+  0x00000000175d7000 JavaThread "Process monitor" daemon [_thread_in_native, id=13236, stack(0x0000000040a30000,0x0000000040b30000)]
+  0x00000000175d6800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=5564, stack(0x0000000040930000,0x0000000040a30000)]
+  0x00000000175d4000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10576, stack(0x0000000040830000,0x0000000040930000)]
+  0x00000000175d2000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=3684, stack(0x0000000040730000,0x0000000040830000)]
+  0x00000000175d3800 JavaThread "Worker-69" [_thread_blocked, id=10504, stack(0x0000000040630000,0x0000000040730000)]
+  0x00000000175d1000 JavaThread "Worker-68" [_thread_blocked, id=13108, stack(0x0000000040530000,0x0000000040630000)]
+  0x00000000175cf800 JavaThread "Worker-67" [_thread_blocked, id=10736, stack(0x000000003ae30000,0x000000003af30000)]
+  0x00000000175cc000 JavaThread "org.eclipse.wst.sse.ui.internal.reconcile.StructuredRegionProcessor" daemon [_thread_blocked, id=5652, stack(0x000000003da10000,0x000000003db10000)]
+  0x00000000175ce000 JavaThread "Process monitor" daemon [_thread_in_native, id=4356, stack(0x000000003d510000,0x000000003d610000)]
+  0x00000000175cf000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=11704, stack(0x000000003d410000,0x000000003d510000)]
+  0x00000000175cc800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=7372, stack(0x000000003d310000,0x000000003d410000)]
+  0x00000000175ca800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=12316, stack(0x000000003d210000,0x000000003d310000)]
+  0x00000000175cd800 JavaThread "Worker-66" [_thread_blocked, id=12768, stack(0x000000003d110000,0x000000003d210000)]
+  0x00000000175c7800 JavaThread "Process monitor" daemon [_thread_in_native, id=12056, stack(0x000000003cc20000,0x000000003cd20000)]
+  0x00000000175c9000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=9080, stack(0x000000003cb20000,0x000000003cc20000)]
+  0x000000001e7de000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=7272, stack(0x000000003b130000,0x000000003b230000)]
+  0x000000001ce58000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=4332, stack(0x000000003b030000,0x000000003b130000)]
+  0x000000002197b800 JavaThread "Worker-64" [_thread_blocked, id=6356, stack(0x0000000038f10000,0x0000000039010000)]
+  0x000000002197e800 JavaThread "Process monitor" daemon [_thread_in_native, id=1628, stack(0x000000003ad30000,0x000000003ae30000)]
+  0x00000000290b3800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=696, stack(0x000000003ac30000,0x000000003ad30000)]
+  0x00000000290ad800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=8408, stack(0x000000003ab30000,0x000000003ac30000)]
+  0x000000001ce56000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=1496, stack(0x00000000390b0000,0x00000000391b0000)]
+  0x00000000290af800 JavaThread "Worker-63" [_thread_blocked, id=1136, stack(0x0000000034eb0000,0x0000000034fb0000)]
+  0x00000000290b2800 JavaThread "Process monitor" daemon [_thread_in_native, id=1460, stack(0x000000003aa30000,0x000000003ab30000)]
+  0x00000000290b1000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=11096, stack(0x000000003a930000,0x000000003aa30000)]
+  0x00000000290ab000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=7548, stack(0x000000003a830000,0x000000003a930000)]
+  0x00000000290ae000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=8060, stack(0x000000003a730000,0x000000003a830000)]
+  0x00000000290b2000 JavaThread "Process monitor" daemon [_thread_in_native, id=13120, stack(0x000000003a430000,0x000000003a530000)]
+  0x00000000290b0800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=9640, stack(0x000000003a330000,0x000000003a430000)]
+  0x00000000290ac000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=536, stack(0x000000003a230000,0x000000003a330000)]
+  0x00000000290af000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=8072, stack(0x0000000039760000,0x0000000039860000)]
+  0x00000000290aa800 JavaThread "Worker-60" [_thread_blocked, id=956, stack(0x000000003f430000,0x000000003f530000)]
+  0x00000000290a9000 JavaThread "Worker-59" [_thread_blocked, id=8488, stack(0x000000003f330000,0x000000003f430000)]
+  0x00000000290a5000 JavaThread "Process monitor" daemon [_thread_in_native, id=9452, stack(0x000000003f230000,0x000000003f330000)]
+  0x00000000290a8000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=12452, stack(0x000000003b940000,0x000000003ba40000)]
+  0x00000000290a4800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=12848, stack(0x000000003b740000,0x000000003b840000)]
+  0x00000000290a6800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=7488, stack(0x0000000039e20000,0x0000000039f20000)]
+  0x00000000290a7800 JavaThread "Process monitor" daemon [_thread_in_native, id=12096, stack(0x000000003f130000,0x000000003f230000)]
+  0x000000001c502000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=7772, stack(0x000000003f030000,0x000000003f130000)]
+  0x000000001cb80000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=3668, stack(0x000000003ef30000,0x000000003f030000)]
+  0x000000001ce5d800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10748, stack(0x000000003a030000,0x000000003a130000)]
+  0x000000001ce59800 JavaThread "Worker-58" [_thread_blocked, id=6120, stack(0x000000003b840000,0x000000003b940000)]
+  0x0000000021975000 JavaThread "Worker-57" [_thread_blocked, id=8748, stack(0x000000003b530000,0x000000003b630000)]
+  0x000000002197e000 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=12972, stack(0x000000003b430000,0x000000003b530000)]
+  0x000000002197f800 JavaThread "Process monitor" daemon [_thread_in_native, id=11500, stack(0x000000003b330000,0x000000003b430000)]
+  0x000000002197b000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=9164, stack(0x000000003b230000,0x000000003b330000)]
+  0x0000000021979800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=5684, stack(0x000000003a130000,0x000000003a230000)]
+  0x000000002197a000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=3188, stack(0x0000000035040000,0x0000000035140000)]
+  0x0000000021976800 JavaThread "Worker-51" [_thread_blocked, id=1500, stack(0x0000000034cb0000,0x0000000034db0000)]
+  0x0000000021978800 JavaThread "Process monitor" daemon [_thread_in_native, id=5600, stack(0x0000000039d20000,0x0000000039e20000)]
+  0x0000000021977000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=5704, stack(0x0000000039c20000,0x0000000039d20000)]
+  0x0000000021972000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=6244, stack(0x0000000039b20000,0x0000000039c20000)]
+  0x0000000021974000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10544, stack(0x0000000039620000,0x0000000039720000)]
+  0x0000000021970800 JavaThread "Worker-49" [_thread_blocked, id=1944, stack(0x0000000038e10000,0x0000000038f10000)]
+  0x0000000021972800 JavaThread "Worker-48" [_thread_blocked, id=2648, stack(0x00000000382f0000,0x00000000383f0000)]
+  0x0000000021973800 JavaThread "Process monitor" daemon [_thread_in_native, id=10396, stack(0x00000000375e0000,0x00000000376e0000)]
+  0x0000000021971000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=2184, stack(0x00000000355b0000,0x00000000356b0000)]
+  0x000000001c505000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=9456, stack(0x00000000354b0000,0x00000000355b0000)]
+  0x000000001cb7d800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10216, stack(0x00000000353b0000,0x00000000354b0000)]
+  0x000000001ce5c000 JavaThread "Worker-45" [_thread_blocked, id=1188, stack(0x0000000034db0000,0x0000000034eb0000)]
+  0x000000001bb57000 JavaThread "Process monitor" daemon [_thread_in_native, id=9364, stack(0x0000000034bb0000,0x0000000034cb0000)]
+  0x000000001ce5d000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=6264, stack(0x0000000034ab0000,0x0000000034bb0000)]
+  0x000000001ce5a800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=4296, stack(0x00000000347e0000,0x00000000348e0000)]
+  0x000000001b567000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=2096, stack(0x00000000346e0000,0x00000000347e0000)]
+  0x000000001b565800 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=8144, stack(0x00000000349b0000,0x0000000034ab0000)]
+  0x000000001ce5b800 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=7560, stack(0x0000000039f30000,0x000000003a030000)]
+  0x000000001ce56800 JavaThread "Worker-42" [_thread_blocked, id=9396, stack(0x0000000039210000,0x0000000039310000)]
+  0x000000001ce50800 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=2068, stack(0x0000000038810000,0x0000000038910000)]
+  0x000000001ce51800 JavaThread "Process monitor" daemon [_thread_in_native, id=6920, stack(0x0000000038d10000,0x0000000038e10000)]
+  0x000000001ce54800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=6988, stack(0x0000000038c10000,0x0000000038d10000)]
+  0x000000001ce53800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=12688, stack(0x0000000038b10000,0x0000000038c10000)]
+  0x000000001ce53000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=3088, stack(0x0000000038a10000,0x0000000038b10000)]
+  0x000000001ce50000 JavaThread "Worker-39" [_thread_blocked, id=7956, stack(0x0000000038910000,0x0000000038a10000)]
+  0x000000001cb7e800 JavaThread "Process monitor" daemon [_thread_in_native, id=6596, stack(0x00000000380f0000,0x00000000381f0000)]
+  0x000000001cb7a000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=6116, stack(0x0000000037ff0000,0x00000000380f0000)]
+  0x000000001cb7c000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10360, stack(0x00000000378e0000,0x00000000379e0000)]
+  0x000000001cb7b800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=1800, stack(0x00000000374e0000,0x00000000375e0000)]
+  0x000000001cb7a800 JavaThread "Process monitor" daemon [_thread_in_native, id=12464, stack(0x0000000037ef0000,0x0000000037ff0000)]
+  0x000000001cb7d000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=8064, stack(0x0000000037be0000,0x0000000037ce0000)]
+  0x000000001c508800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=12820, stack(0x0000000037ae0000,0x0000000037be0000)]
+  0x000000001b56f000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11936, stack(0x00000000379e0000,0x0000000037ae0000)]
+  0x000000001b56d000 JavaThread "Process monitor" daemon [_thread_in_native, id=1952, stack(0x0000000037df0000,0x0000000037ef0000)]
+  0x000000001c506800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=13208, stack(0x0000000037cf0000,0x0000000037df0000)]
+  0x000000001c509800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=1328, stack(0x00000000377e0000,0x00000000378e0000)]
+  0x000000001c505800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=12696, stack(0x00000000376e0000,0x00000000377e0000)]
+  0x000000001c4fe000 JavaThread "Worker-36" [_thread_blocked, id=12128, stack(0x0000000032790000,0x0000000032890000)]
+  0x000000001c504000 JavaThread "Worker-35" [_thread_blocked, id=5692, stack(0x00000000367e0000,0x00000000368e0000)]
+  0x000000001c500800 JavaThread "Worker-34" [_thread_blocked, id=7216, stack(0x00000000372e0000,0x00000000373e0000)]
+  0x000000001c503800 JavaThread "Process monitor" daemon [_thread_in_native, id=4516, stack(0x00000000370e0000,0x00000000371e0000)]
+  0x000000001c502800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=188, stack(0x0000000036fe0000,0x00000000370e0000)]
+  0x000000001c501000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10556, stack(0x0000000036ee0000,0x0000000036fe0000)]
+  0x000000001c4fc800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=9692, stack(0x0000000036de0000,0x0000000036ee0000)]
+  0x000000001c4ff800 JavaThread "Process monitor" daemon [_thread_in_native, id=11240, stack(0x0000000036ce0000,0x0000000036de0000)]
+  0x000000001c4ff000 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=8980, stack(0x0000000036be0000,0x0000000036ce0000)]
+  0x000000001c4fc000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=6060, stack(0x0000000036ae0000,0x0000000036be0000)]
+  0x000000001c4fb000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=5672, stack(0x00000000369e0000,0x0000000036ae0000)]
+  0x000000001c4fa800 JavaThread "Process monitor" daemon [_thread_in_native, id=11656, stack(0x00000000366e0000,0x00000000367e0000)]
+  0x000000001c4fd800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=13052, stack(0x00000000364e0000,0x00000000365e0000)]
+  0x000000001ed26800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11468, stack(0x00000000362e0000,0x00000000363e0000)]
+  0x000000001b568800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=10960, stack(0x0000000032690000,0x0000000032790000)]
+  0x000000001bb53800 JavaThread "Worker-32" [_thread_blocked, id=10768, stack(0x00000000363e0000,0x00000000364e0000)]
+  0x0000000017fc6800 JavaThread "Worker-31" [_thread_blocked, id=11804, stack(0x0000000032590000,0x0000000032690000)]
+  0x0000000017fc5000 JavaThread "Worker-30" [_thread_blocked, id=4720, stack(0x0000000032490000,0x0000000032590000)]
+  0x0000000017fc7000 JavaThread "Process monitor" daemon [_thread_in_native, id=9212, stack(0x000000002f380000,0x000000002f480000)]
+  0x0000000017fc5800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=12736, stack(0x000000002ef80000,0x000000002f080000)]
+  0x0000000017fc4000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=3216, stack(0x000000002e7e0000,0x000000002e8e0000)]
+  0x0000000017fc1000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=4864, stack(0x0000000020f30000,0x0000000021030000)]
+  0x0000000017fc3800 JavaThread "Process monitor" daemon [_thread_in_native, id=12468, stack(0x00000000361e0000,0x00000000362e0000)]
+  0x0000000017fc2800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=13028, stack(0x00000000330a0000,0x00000000331a0000)]
+  0x0000000017fc2000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11256, stack(0x0000000032fa0000,0x00000000330a0000)]
+  0x0000000017fc0800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=9280, stack(0x0000000032ea0000,0x0000000032fa0000)]
+  0x000000001ed22000 JavaThread "Worker-28" [_thread_blocked, id=2660, stack(0x000000002e8e0000,0x000000002e9e0000)]
+  0x000000001bb58800 JavaThread "Process monitor" daemon [_thread_in_native, id=2748, stack(0x00000000371e0000,0x00000000372e0000)]
+  0x000000001bb52800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=8332, stack(0x00000000335f0000,0x00000000336f0000)]
+  0x000000001bb4c000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=1928, stack(0x00000000332a0000,0x00000000333a0000)]
+  0x000000001b570000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=9132, stack(0x00000000331a0000,0x00000000332a0000)]
+  0x000000001b56a800 JavaThread "Process monitor" daemon [_thread_in_native, id=11436, stack(0x0000000032da0000,0x0000000032ea0000)]
+  0x000000001b561800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=12136, stack(0x0000000032290000,0x0000000032390000)]
+  0x000000001b564000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=8552, stack(0x0000000031840000,0x0000000031940000)]
+  0x000000001b563000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=800, stack(0x00000000301b0000,0x00000000302b0000)]
+  0x000000001b567800 JavaThread "Process monitor" daemon [_thread_in_native, id=7300, stack(0x000000002f580000,0x000000002f680000)]
+  0x000000001b564800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=6752, stack(0x000000002f480000,0x000000002f580000)]
+  0x000000001b561000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=7156, stack(0x000000002ebb0000,0x000000002ecb0000)]
+  0x000000001b562800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11868, stack(0x0000000028200000,0x0000000028300000)]
+  0x000000001e7de800 JavaThread "Worker-23" [_thread_blocked, id=6572, stack(0x0000000028380000,0x0000000028480000)]
+  0x0000000017272000 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=4644, stack(0x000000002ee80000,0x000000002ef80000)]
+  0x000000001ed22800 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=11260, stack(0x000000002ed80000,0x000000002ee80000)]
+  0x000000001e7d6800 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=7780, stack(0x000000002e6e0000,0x000000002e7e0000)]
+  0x000000001e7d1000 JavaThread "Worker-21" [_thread_blocked, id=6032, stack(0x0000000032ca0000,0x0000000032da0000)]
+  0x000000001e7d9800 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=10868, stack(0x00000000356e0000,0x00000000357e0000)]
+  0x000000001e7d4000 JavaThread "Worker-19" [_thread_blocked, id=10888, stack(0x0000000028100000,0x0000000028200000)]
+  0x000000001e7d0800 JavaThread "Worker-18" [_thread_blocked, id=11908, stack(0x00000000328a0000,0x00000000329a0000)]
+  0x000000001e7d2000 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=10056, stack(0x00000000329a0000,0x0000000032aa0000)]
+  0x0000000017276800 JavaThread "Process monitor" daemon [_thread_in_native, id=9508, stack(0x0000000032390000,0x0000000032490000)]
+  0x000000001ed29800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=4216, stack(0x0000000031c90000,0x0000000031d90000)]
+  0x000000001ed1f800 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=7816, stack(0x00000000305b0000,0x00000000306b0000)]
+  0x000000001bb54000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=5132, stack(0x0000000027ee0000,0x0000000027fe0000)]
+  0x000000001bb55000 JavaThread "Process monitor" daemon [_thread_in_native, id=12996, stack(0x0000000029dd0000,0x0000000029ed0000)]
+  0x000000001bb4a800 JavaThread "Input Stream Monitor" daemon [_thread_blocked, id=8732, stack(0x0000000028000000,0x0000000028100000)]
+  0x000000001ed27000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=3732, stack(0x00000000251a0000,0x00000000252a0000)]
+  0x000000001ed2a000 JavaThread "Output Stream Monitor" daemon [_thread_in_native, id=11524, stack(0x0000000025080000,0x0000000025180000)]
+  0x000000001ed28000 JavaThread "Recommenders-Timeout-Manager" [_thread_blocked, id=7052, stack(0x00000000302b0000,0x00000000303b0000)]
+  0x000000001ed28800 JavaThread "Timer-0" daemon [_thread_blocked, id=5036, stack(0x00000000300b0000,0x00000000301b0000)]
+  0x000000001ed1f000 JavaThread "[ThreadPool Manager] - Idle Thread" daemon [_thread_blocked, id=7116, stack(0x000000002a6d0000,0x000000002a7d0000)]
+  0x000000001ed1b000 JavaThread "com.google.inject.internal.util.$Finalizer" daemon [_thread_blocked, id=9560, stack(0x000000002a1d0000,0x000000002a2d0000)]
+  0x0000000017274000 JavaThread "Provisioning Event Dispatcher" daemon [_thread_blocked, id=1760, stack(0x0000000028890000,0x0000000028990000)]
+  0x000000001bb59800 JavaThread "Worker-13" [_thread_blocked, id=13228, stack(0x0000000028790000,0x0000000028890000)]
+  0x000000001bb4b000 JavaThread "Thread-9" [_thread_blocked, id=11720, stack(0x0000000027970000,0x0000000027a70000)]
+  0x000000001bb52000 JavaThread "Worker-6" [_thread_blocked, id=6932, stack(0x00000000252e0000,0x00000000253e0000)]
+  0x000000001bb4e000 JavaThread "org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon [_thread_blocked, id=10496, stack(0x00000000212c0000,0x00000000213c0000)]
+  0x000000001bb51000 JavaThread "EventAdmin Async Event Dispatcher Thread" daemon [_thread_blocked, id=7932, stack(0x0000000020450000,0x0000000020550000)]
+  0x000000001bb4c800 JavaThread "Java indexing" daemon [_thread_blocked, id=11252, stack(0x000000001df00000,0x000000001e000000)]
+  0x0000000017275000 JavaThread "Bundle File Closer" daemon [_thread_blocked, id=10896, stack(0x000000001d4e0000,0x000000001d5e0000)]
+  0x0000000017273800 JavaThread "Worker-0" [_thread_blocked, id=4100, stack(0x000000001bb60000,0x000000001bc60000)]
+  0x0000000017188000 JavaThread "EMF Reference Cleaner" daemon [_thread_blocked, id=8264, stack(0x0000000018f20000,0x0000000019020000)]
+  0x0000000016dd4000 JavaThread "Worker-JM" [_thread_blocked, id=5096, stack(0x0000000018aa0000,0x0000000018ba0000)]
+  0x000000001720b000 JavaThread "[Timer] - Main Queue Handler" daemon [_thread_blocked, id=7084, stack(0x00000000186b0000,0x00000000187b0000)]
+  0x0000000016ff2000 JavaThread "Start Level: Equinox Container: 709ae623-0b02-0016-1f39-b0c3e1b3c09d" daemon [_thread_blocked, id=3240, stack(0x00000000182b0000,0x00000000183b0000)]
+  0x000000001702d000 JavaThread "Framework Event Dispatcher: Equinox Container: 709ae623-0b02-0016-1f39-b0c3e1b3c09d" daemon [_thread_blocked, id=12980, stack(0x00000000181b0000,0x00000000182b0000)]
+  0x0000000016c85800 JavaThread "Active Thread: Equinox Container: 709ae623-0b02-0016-1f39-b0c3e1b3c09d" [_thread_blocked, id=936, stack(0x00000000180b0000,0x00000000181b0000)]
+  0x0000000016309000 JavaThread "Service Thread" daemon [_thread_blocked, id=1656, stack(0x00000000166e0000,0x00000000167e0000)]
+  0x00000000149b9800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=4764, stack(0x00000000161e0000,0x00000000162e0000)]
+  0x00000000149b4000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=11372, stack(0x00000000160e0000,0x00000000161e0000)]
+=>0x00000000149ad000 JavaThread "C2 CompilerThread0" daemon [_thread_in_vm, id=4696, stack(0x0000000015fe0000,0x00000000160e0000)]
+  0x00000000149ab800 JavaThread "Attach Listener" daemon [_thread_blocked, id=3972, stack(0x0000000015ee0000,0x0000000015fe0000)]
+  0x00000000149aa000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=2988, stack(0x0000000015de0000,0x0000000015ee0000)]
+  0x000000001499a800 JavaThread "Finalizer" daemon [_thread_blocked, id=9720, stack(0x0000000015c00000,0x0000000015d00000)]
+  0x0000000014979000 JavaThread "Reference Handler" daemon [_thread_blocked, id=12264, stack(0x0000000015b00000,0x0000000015c00000)]
+  0x000000000039e800 JavaThread "main" [_thread_in_native, id=10876, stack(0x0000000000040000,0x0000000000140000)]
+
+Other Threads:
+  0x0000000014977000 VMThread [stack: 0x0000000015a00000,0x0000000015b00000] [id=9336]
+  0x000000001631e800 WatcherThread [stack: 0x00000000167e0000,0x00000000168e0000] [id=10112]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 152064K, used 93395K [0x00000000eab00000, 0x00000000f7380000, 0x0000000100000000)
+  eden space 102912K, 54% used [0x00000000eab00000,0x00000000ee208ec0,0x00000000f0f80000)
+  from space 49152K, 75% used [0x00000000f4100000,0x00000000f652c0c0,0x00000000f7100000)
+  to   space 50688K, 0% used [0x00000000f0f80000,0x00000000f0f80000,0x00000000f4100000)
+ ParOldGen       total 542720K, used 146738K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 27% used [0x00000000c0000000,0x00000000c8f4cab0,0x00000000e1200000)
+ Metaspace       used 150571K, capacity 162591K, committed 162816K, reserved 1189888K
+  class space    used 17517K, capacity 21423K, committed 21504K, reserved 1048576K
+
+Card table byte_map: [0x00000000116a0000,0x00000000118b0000] byte_map_base: 0x00000000110a0000
+
+Marking Bits: (ParMarkBitMap*) 0x0000000055a70600
+ Begin Bits: [0x0000000011e10000, 0x0000000012e10000)
+ End Bits:   [0x0000000012e10000, 0x0000000013e10000)
+
+Polling page: 0x00000000003f0000
+
+CodeCache: size=245760Kb used=91202Kb max_used=91705Kb free=154557Kb
+ bounds [0x00000000022e0000, 0x0000000007d30000, 0x00000000112e0000]
+ total_blobs=24370 nmethods=23335 adapters=938
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 11495.857 Thread 0x00000000149b4000 33938       4       org.eclipse.e4.core.internal.di.FieldRequestor::execute (33 bytes)
+Event: 11495.862 Thread 0x00000000149b9800 33940       3       org.eclipse.emf.common.util.URI::createURIWithCache (45 bytes)
+Event: 11495.862 Thread 0x00000000149b9800 nmethod 33940 0x0000000006e84810 code [0x0000000006e849e0, 0x0000000006e84ff8]
+Event: 11495.867 Thread 0x00000000149b4000 nmethod 33938 0x0000000006afd0d0 code [0x0000000006afd260, 0x0000000006afd668]
+Event: 11495.867 Thread 0x00000000149b4000 33939   !   4       org.eclipse.e4.core.internal.di.FieldRequestor::setField (89 bytes)
+Event: 11495.873 Thread 0x00000000149b4000 nmethod 33939 0x0000000006053110 code [0x00000000060532a0, 0x0000000006053588]
+Event: 11495.873 Thread 0x00000000149b4000 33941       4       org.eclipse.e4.core.internal.di.FieldRequestor::calcDependentObjects (37 bytes)
+Event: 11495.876 Thread 0x00000000149b9800 33942       3       org.eclipse.e4.ui.workbench.renderers.swt.HandledContributionItem::handleWidgetDispose (143 bytes)
+Event: 11495.879 Thread 0x00000000149b9800 nmethod 33942 0x0000000005906050 code [0x0000000005906440, 0x0000000005908a48]
+Event: 11495.894 Thread 0x00000000149b4000 nmethod 33941 0x0000000006054550 code [0x00000000060548c0, 0x0000000006055740]
+
+GC Heap History (10 events):
+Event: 8569.527 GC heap before
+{Heap before GC invocations=80 (full 8):
+ PSYoungGen      total 146432K, used 137350K [0x00000000eab00000, 0x00000000f6000000, 0x0000000100000000)
+  eden space 109568K, 100% used [0x00000000eab00000,0x00000000f1600000,0x00000000f1600000)
+  from space 36864K, 75% used [0x00000000f1700000,0x00000000f3221830,0x00000000f3b00000)
+  to   space 37888K, 0% used [0x00000000f3b00000,0x00000000f3b00000,0x00000000f6000000)
+ ParOldGen       total 542720K, used 140646K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 25% used [0x00000000c0000000,0x00000000c89598b8,0x00000000e1200000)
+ Metaspace       used 146129K, capacity 157857K, committed 158080K, reserved 1185792K
+  class space    used 16903K, capacity 20746K, committed 20864K, reserved 1048576K
+Event: 8569.553 GC heap after
+Heap after GC invocations=80 (full 8):
+ PSYoungGen      total 146432K, used 28221K [0x00000000eab00000, 0x00000000f6000000, 0x0000000100000000)
+  eden space 108544K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000f1500000)
+  from space 37888K, 74% used [0x00000000f3b00000,0x00000000f568f758,0x00000000f6000000)
+  to   space 38400K, 0% used [0x00000000f1500000,0x00000000f1500000,0x00000000f3a80000)
+ ParOldGen       total 542720K, used 142541K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8b335c0,0x00000000e1200000)
+ Metaspace       used 146129K, capacity 157857K, committed 158080K, reserved 1185792K
+  class space    used 16903K, capacity 20746K, committed 20864K, reserved 1048576K
+}
+Event: 8585.938 GC heap before
+{Heap before GC invocations=81 (full 8):
+ PSYoungGen      total 146432K, used 136765K [0x00000000eab00000, 0x00000000f6000000, 0x0000000100000000)
+  eden space 108544K, 100% used [0x00000000eab00000,0x00000000f1500000,0x00000000f1500000)
+  from space 37888K, 74% used [0x00000000f3b00000,0x00000000f568f758,0x00000000f6000000)
+  to   space 38400K, 0% used [0x00000000f1500000,0x00000000f1500000,0x00000000f3a80000)
+ ParOldGen       total 542720K, used 142541K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8b335c0,0x00000000e1200000)
+ Metaspace       used 146166K, capacity 157857K, committed 158080K, reserved 1185792K
+  class space    used 16903K, capacity 20746K, committed 20864K, reserved 1048576K
+Event: 8585.974 GC heap after
+Heap after GC invocations=81 (full 8):
+ PSYoungGen      total 145920K, used 38385K [0x00000000eab00000, 0x00000000f6900000, 0x0000000100000000)
+  eden space 107520K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000f1400000)
+  from space 38400K, 99% used [0x00000000f1500000,0x00000000f3a7c4d0,0x00000000f3a80000)
+  to   space 43520K, 0% used [0x00000000f3e80000,0x00000000f3e80000,0x00000000f6900000)
+ ParOldGen       total 542720K, used 143907K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8c88dc0,0x00000000e1200000)
+ Metaspace       used 146166K, capacity 157857K, committed 158080K, reserved 1185792K
+  class space    used 16903K, capacity 20746K, committed 20864K, reserved 1048576K
+}
+Event: 8632.269 GC heap before
+{Heap before GC invocations=82 (full 8):
+ PSYoungGen      total 145920K, used 145905K [0x00000000eab00000, 0x00000000f6900000, 0x0000000100000000)
+  eden space 107520K, 100% used [0x00000000eab00000,0x00000000f1400000,0x00000000f1400000)
+  from space 38400K, 99% used [0x00000000f1500000,0x00000000f3a7c4d0,0x00000000f3a80000)
+  to   space 43520K, 0% used [0x00000000f3e80000,0x00000000f3e80000,0x00000000f6900000)
+ ParOldGen       total 542720K, used 143907K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8c88dc0,0x00000000e1200000)
+ Metaspace       used 146182K, capacity 157861K, committed 158080K, reserved 1185792K
+  class space    used 16903K, capacity 20746K, committed 20864K, reserved 1048576K
+Event: 8632.307 GC heap after
+Heap after GC invocations=82 (full 8):
+ PSYoungGen      total 148480K, used 37425K [0x00000000eab00000, 0x00000000f6d00000, 0x0000000100000000)
+  eden space 104960K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000f1180000)
+  from space 43520K, 85% used [0x00000000f3e80000,0x00000000f630c520,0x00000000f6900000)
+  to   space 46080K, 0% used [0x00000000f1180000,0x00000000f1180000,0x00000000f3e80000)
+ ParOldGen       total 542720K, used 144130K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8cc0a80,0x00000000e1200000)
+ Metaspace       used 146182K, capacity 157861K, committed 158080K, reserved 1185792K
+  class space    used 16903K, capacity 20746K, committed 20864K, reserved 1048576K
+}
+Event: 11360.362 GC heap before
+{Heap before GC invocations=83 (full 8):
+ PSYoungGen      total 148480K, used 142385K [0x00000000eab00000, 0x00000000f6d00000, 0x0000000100000000)
+  eden space 104960K, 100% used [0x00000000eab00000,0x00000000f1180000,0x00000000f1180000)
+  from space 43520K, 85% used [0x00000000f3e80000,0x00000000f630c520,0x00000000f6900000)
+  to   space 46080K, 0% used [0x00000000f1180000,0x00000000f1180000,0x00000000f3e80000)
+ ParOldGen       total 542720K, used 144130K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8cc0a80,0x00000000e1200000)
+ Metaspace       used 146334K, capacity 158141K, committed 158592K, reserved 1187840K
+  class space    used 16905K, capacity 20750K, committed 20864K, reserved 1048576K
+Event: 11360.394 GC heap after
+Heap after GC invocations=83 (full 8):
+ PSYoungGen      total 150528K, used 38826K [0x00000000eab00000, 0x00000000f7100000, 0x0000000100000000)
+  eden space 104448K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000f1100000)
+  from space 46080K, 84% used [0x00000000f1180000,0x00000000f376aa80,0x00000000f3e80000)
+  to   space 49152K, 0% used [0x00000000f4100000,0x00000000f4100000,0x00000000f7100000)
+ ParOldGen       total 542720K, used 144130K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8cc0a80,0x00000000e1200000)
+ Metaspace       used 146334K, capacity 158141K, committed 158592K, reserved 1187840K
+  class space    used 16905K, capacity 20750K, committed 20864K, reserved 1048576K
+}
+Event: 11480.201 GC heap before
+{Heap before GC invocations=84 (full 8):
+ PSYoungGen      total 150528K, used 143274K [0x00000000eab00000, 0x00000000f7100000, 0x0000000100000000)
+  eden space 104448K, 100% used [0x00000000eab00000,0x00000000f1100000,0x00000000f1100000)
+  from space 46080K, 84% used [0x00000000f1180000,0x00000000f376aa80,0x00000000f3e80000)
+  to   space 49152K, 0% used [0x00000000f4100000,0x00000000f4100000,0x00000000f7100000)
+ ParOldGen       total 542720K, used 144130K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 26% used [0x00000000c0000000,0x00000000c8cc0a80,0x00000000e1200000)
+ Metaspace       used 148067K, capacity 159971K, committed 160128K, reserved 1187840K
+  class space    used 17145K, capacity 21064K, committed 21120K, reserved 1048576K
+Event: 11480.236 GC heap after
+Heap after GC invocations=84 (full 8):
+ PSYoungGen      total 152064K, used 37040K [0x00000000eab00000, 0x00000000f7380000, 0x0000000100000000)
+  eden space 102912K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000f0f80000)
+  from space 49152K, 75% used [0x00000000f4100000,0x00000000f652c0c0,0x00000000f7100000)
+  to   space 50688K, 0% used [0x00000000f0f80000,0x00000000f0f80000,0x00000000f4100000)
+ ParOldGen       total 542720K, used 146738K [0x00000000c0000000, 0x00000000e1200000, 0x00000000eab00000)
+  object space 542720K, 27% used [0x00000000c0000000,0x00000000c8f4cab0,0x00000000e1200000)
+ Metaspace       used 148067K, capacity 159971K, committed 160128K, reserved 1187840K
+  class space    used 17145K, capacity 21064K, committed 21120K, reserved 1048576K
+}
+
+Deoptimization events (10 events):
+Event: 11491.435 Thread 0x00000000175db800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000004a6cadc method=org.eclipse.core.internal.watson.ElementTree.getElementData(Lorg/eclipse/core/runtime/IPath;)Ljava/lang/Object; @ 17
+Event: 11491.436 Thread 0x00000000175db800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000004027248 method=org.eclipse.core.internal.events.ResourceDelta.isPhantom()Z @ 7
+Event: 11491.436 Thread 0x00000000175db800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000004c95acc method=org.eclipse.core.internal.events.ResourceDelta.isTeamPrivate()Z @ 7
+Event: 11491.436 Thread 0x00000000175db800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000004c03a4c method=org.eclipse.core.internal.events.ResourceDelta.isHidden()Z @ 7
+Event: 11491.436 Thread 0x00000000175db800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000005c3c034 method=org.eclipse.core.internal.events.ResourceDelta.getResource()Lorg/eclipse/core/resources/IResource; @ 44
+Event: 11491.450 Thread 0x00000000175db800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x000000000320c1d8 method=com.sun.org.apache.xerces.internal.dom.ElementImpl.getAttributes()Lorg/w3c/dom/NamedNodeMap; @ 4
+Event: 11491.450 Thread 0x000000000039e800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00000000072af8fc method=org.eclipse.ui.internal.e4.compatibility.SelectionService.handleSelectionChanged(Lorg/eclipse/e4/ui/model/application/ui/basic/MPart;Ljava/lang/Object;Z)V @ 39
+Event: 11491.486 Thread 0x000000000039e800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000003bdaa3c method=org.eclipse.jface.text.source.OverviewRuler.cacheAnnotations()V @ 75
+Event: 11491.499 Thread 0x000000000039e800 Uncommon trap: reason=null_check action=make_not_entrant pc=0x0000000003493454 method=org.eclipse.jface.text.TextViewer.modelRange2ClosestWidgetRange(Lorg/eclipse/jface/text/IRegion;)Lorg/eclipse/jface/text/IRegion; @ 4
+Event: 11491.618 Thread 0x00000000175cf800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000005a69758 method=org.eclipse.core.internal.dtree.AbstractDataTreeNode.compareWith([Lorg/eclipse/core/internal/dtree/AbstractDataTreeNode;[Lorg/eclipse/core/internal/dtree/AbstractDataTreeNodeaHiæ∑q∆@
+
+Internal exceptions (10 events):
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4abb88) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4ac598) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4acbe8) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4ad208) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4adc00) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4ae250) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4ae870) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4af250) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4af8a0) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 11491.611 Thread 0x000000000039e800 Exception <a 'java/io/IOException'> (0x00000000ed4afec0) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u77\6540\hotspot\src\share\vm\prims\jni.cpp, line 709]
+
+Events (10 events):
+Event: 11491.971 Thread 0x00000000175e0000 Thread added: 0x00000000175e0000
+Event: 11491.971 Thread 0x00000000175e0000 Thread exited: 0x00000000175e0000
+Event: 11492.047 Executing VM operation: RevokeBias
+Event: 11492.047 Executing VM operation: RevokeBias done
+Event: 11492.471 Executing VM operation: RevokeBias
+Event: 11492.471 Executing VM operation: RevokeBias done
+Event: 11492.972 Thread 0x00000000175e0000 Thread added: 0x00000000175e0000
+Event: 11492.972 Thread 0x00000000175e0000 Thread exited: 0x00000000175e0000
+Event: 11494.443 Executing VM operation: RevokeBias
+Event: 11494.443 Executing VM operation: RevokeBias done
+
+
+Dynamic libraries:
+0x0000000000400000 - 0x000000000044f000 	C:\devel\ec45\eclipse\eclipse.exe
+0x00007ffdcd560000 - 0x00007ffdcd70d000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ffdcceb0000 - 0x00007ffdccfee000 	C:\Windows\system32\KERNEL32.DLL
+0x00007ffdca9c0000 - 0x00007ffdcaad5000 	C:\Windows\system32\KERNELBASE.dll
+0x00007ffdcb650000 - 0x00007ffdcb7c7000 	C:\Windows\system32\USER32.dll
+0x00007ffdc8780000 - 0x00007ffdc89fb000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.18006_none_623f33d3ecbe86e8\COMCTL32.dll
+0x00007ffdcd0b0000 - 0x00007ffdcd15a000 	C:\Windows\system32\msvcrt.dll
+0x00007ffdcb380000 - 0x00007ffdcb4d0000 	C:\Windows\system32\GDI32.dll
+0x00007ffdcd520000 - 0x00007ffdcd556000 	C:\Windows\system32\IMM32.DLL
+0x00007ffdcb220000 - 0x00007ffdcb372000 	C:\Windows\system32\MSCTF.dll
+0x0000000072000000 - 0x0000000072012000 	C:\devel\ec45\eclipse\plugins\org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.300.v20150602-1417\eclipse_1611.dll
+0x00007ffdcb5a0000 - 0x00007ffdcb64a000 	C:\Windows\system32\ADVAPI32.dll
+0x00007ffdc81b0000 - 0x00007ffdc81ba000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ffdcd4c0000 - 0x00007ffdcd519000 	C:\Windows\SYSTEM32\sechost.dll
+0x00007ffdcabf0000 - 0x00007ffdcad31000 	C:\Windows\system32\RPCRT4.dll
+0x00007ffdc92f0000 - 0x00007ffdc9419000 	C:\Windows\system32\uxtheme.dll
+0x00007ffdcad40000 - 0x00007ffdcaf51000 	C:\Windows\SYSTEM32\combase.dll
+0x00007ffdcd1f0000 - 0x00007ffdcd384000 	C:\Windows\system32\ole32.dll
+0x00007ffdc94a0000 - 0x00007ffdc94ab000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ffdca520000 - 0x00007ffdca52b000 	C:\Windows\SYSTEM32\CRYPTBASE.dll
+0x00007ffdca4b0000 - 0x00007ffdca513000 	C:\Windows\SYSTEM32\bcryptPrimitives.dll
+0x0000000055260000 - 0x0000000055af0000 	C:\Program Files\Java\jre1.8.0_77\bin\server\jvm.dll
+0x00007ffdb57e0000 - 0x00007ffdb57e9000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ffdc7fd0000 - 0x00007ffdc7ff2000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ffdcabe0000 - 0x00007ffdcabe7000 	C:\Windows\system32\PSAPI.DLL
+0x0000000058780000 - 0x0000000058852000 	C:\Windows\SYSTEM32\MSVCR100.dll
+0x00007ffdcd160000 - 0x00007ffdcd1ba000 	C:\Windows\system32\WS2_32.dll
+0x00007ffdc7c70000 - 0x00007ffdc7c9a000 	C:\Windows\SYSTEM32\WINMMBASE.dll
+0x00007ffdcd1e0000 - 0x00007ffdcd1e9000 	C:\Windows\system32\NSI.dll
+0x00007ffdcab90000 - 0x00007ffdcabdf000 	C:\Windows\SYSTEM32\cfgmgr32.dll
+0x00007ffdc94b0000 - 0x00007ffdc94d8000 	C:\Windows\SYSTEM32\DEVOBJ.dll
+0x0000000059770000 - 0x000000005977f000 	C:\Program Files\Java\jre1.8.0_77\bin\verify.dll
+0x0000000059660000 - 0x0000000059689000 	C:\Program Files\Java\jre1.8.0_77\bin\java.dll
+0x0000000059750000 - 0x0000000059766000 	C:\Program Files\Java\jre1.8.0_77\bin\zip.dll
+0x00007ffdcb7d0000 - 0x00007ffdcccfa000 	C:\Windows\system32\SHELL32.dll
+0x00007ffdcb1b0000 - 0x00007ffdcb204000 	C:\Windows\system32\SHLWAPI.dll
+0x00007ffdc8c60000 - 0x00007ffdc8d12000 	C:\Windows\SYSTEM32\SHCORE.dll
+0x00007ffdca6b0000 - 0x00007ffdca6c5000 	C:\Windows\SYSTEM32\profapi.dll
+0x00007ffdca060000 - 0x00007ffdca080000 	C:\Windows\SYSTEM32\CRYPTSP.dll
+0x00007ffdc9a10000 - 0x00007ffdc9a46000 	C:\Windows\system32\rsaenh.dll
+0x00007ffdca170000 - 0x00007ffdca196000 	C:\Windows\SYSTEM32\bcrypt.dll
+0x00007ffdc9b40000 - 0x00007ffdc9b61000 	C:\Windows\SYSTEM32\USERENV.dll
+0x0000000058070000 - 0x000000005808a000 	C:\Program Files\Java\jre1.8.0_77\bin\net.dll
+0x00007ffdca000000 - 0x00007ffdca059000 	C:\Windows\system32\mswsock.dll
+0x00007ffdc3460000 - 0x00007ffdc348a000 	C:\Windows\SYSTEM32\IPHLPAPI.DLL
+0x00007ffdc3450000 - 0x00007ffdc345a000 	C:\Windows\SYSTEM32\WINNSI.DLL
+0x00007ffdc2730000 - 0x00007ffdc2746000 	C:\Windows\SYSTEM32\dhcpcsvc6.DLL
+0x00007ffdc2870000 - 0x00007ffdc288a000 	C:\Windows\SYSTEM32\dhcpcsvc.DLL
+0x0000000057e10000 - 0x0000000057e21000 	C:\Program Files\Java\jre1.8.0_77\bin\nio.dll
+0x00007ffdbc5a0000 - 0x00007ffdbc5b5000 	C:\Windows\system32\napinsp.dll
+0x00007ffdbc5c0000 - 0x00007ffdbc5da000 	C:\Windows\system32\pnrpnsp.dll
+0x00007ffdc72c0000 - 0x00007ffdc72db000 	C:\Windows\system32\NLAapi.dll
+0x00007ffdc9c60000 - 0x00007ffdc9d04000 	C:\Windows\SYSTEM32\DNSAPI.dll
+0x00007ffdbc670000 - 0x00007ffdbc67d000 	C:\Windows\System32\winrnr.dll
+0x00007ffdbc5e0000 - 0x00007ffdbc5f4000 	C:\Windows\system32\wshbth.dll
+0x00007ffdbcc80000 - 0x00007ffdbcc8a000 	C:\Windows\System32\rasadhlp.dll
+0x00007ffdc2a80000 - 0x00007ffdc2aeb000 	C:\Windows\System32\fwpuclnt.dll
+0x00007ffdc12e0000 - 0x00007ffdc12f1000 	C:\devel\ec45\eclipse\configuration\org.eclipse.osgi\83\0\.cp\jWinHttp-1.0.0.dll
+0x00007ffdbe0b0000 - 0x00007ffdbe179000 	C:\Windows\SYSTEM32\WINHTTP.dll
+0x0000000019320000 - 0x00000000193c8000 	C:\devel\ec45\eclipse\configuration\org.eclipse.osgi\388\0\.cp\swt-win32-4528.dll
+0x00007ffdcb4d0000 - 0x00007ffdcb591000 	C:\Windows\system32\OLEAUT32.dll
+0x00007ffdcd400000 - 0x00007ffdcd4b6000 	C:\Windows\system32\comdlg32.dll
+0x00007ffdc62f0000 - 0x00007ffdc6372000 	C:\Windows\SYSTEM32\WINSPOOL.DRV
+0x00007ffdbc690000 - 0x00007ffdbc6a6000 	C:\Windows\SYSTEM32\USP10.dll
+0x00007ffdc1640000 - 0x00007ffdc18c3000 	C:\Windows\SYSTEM32\WININET.dll
+0x00007ffdca780000 - 0x00007ffdca95f000 	C:\Windows\system32\CRYPT32.dll
+0x00007ffdc1a00000 - 0x00007ffdc1cc8000 	C:\Windows\SYSTEM32\iertutil.dll
+0x00007ffdca760000 - 0x00007ffdca771000 	C:\Windows\system32\MSASN1.dll
+0x00007ffdc8a00000 - 0x00007ffdc8a21000 	C:\Windows\system32\dwmapi.dll
+0x00007ffdc3ef0000 - 0x00007ffdc406f000 	C:\Windows\SYSTEM32\propsys.dll
+0x00007ffdccff0000 - 0x00007ffdcd0a6000 	C:\Windows\SYSTEM32\clbcatq.dll
+0x00007ffdb5410000 - 0x00007ffdb541d000 	C:\Windows\SYSTEM32\LINKINFO.dll
+0x00000000194b0000 - 0x00000000194ce000 	C:\devel\ec45\eclipse\configuration\org.eclipse.osgi\388\0\.cp\swt-gdip-win32-4528.dll
+0x00007ffdc7740000 - 0x00007ffdc78f0000 	C:\Windows\WinSxS\amd64_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.18123_none_932c6b81474ee6d2\gdiplus.dll
+0x00007ffdc84d0000 - 0x00007ffdc867e000 	C:\Windows\SYSTEM32\WindowsCodecs.dll
+0x00007ffdc72e0000 - 0x00007ffdc734a000 	C:\Windows\SYSTEM32\oleacc.dll
+0x0000000180000000 - 0x0000000180012000 	C:\devel\ec45\eclipse\configuration\org.eclipse.osgi\80\0\.cp\os\win32\x86_64\localfile_1_0_0.dll
+0x00007ffdc7f90000 - 0x00007ffdc7f97000 	C:\Windows\SYSTEM32\msimg32.dll
+0x00007ffdac010000 - 0x00007ffdac04e000 	C:\Windows\system32\mlang.dll
+0x00000000578c0000 - 0x00000000578e4000 	C:\Program Files\Java\jre1.8.0_77\bin\sunec.dll
+0x00007ffdc70b0000 - 0x00007ffdc729c000 	C:\Windows\SYSTEM32\DWrite.dll
+0x00007ffdb1a40000 - 0x00007ffdb1d3b000 	C:\Windows\system32\explorerframe.dll
+0x00007ffdc7bc0000 - 0x00007ffdc7c64000 	C:\Windows\system32\DUser.dll
+0x00007ffdc8a30000 - 0x00007ffdc8bf1000 	C:\Windows\system32\DUI70.dll
+0x00007ffdc68c0000 - 0x00007ffdc68f2000 	C:\Windows\SYSTEM32\ntmarta.dll
+0x00007ffdc9230000 - 0x00007ffdc92be000 	C:\Windows\SYSTEM32\apphelp.dll
+0x00007ffdaaef0000 - 0x00007ffdaaf24000 	C:\Program Files (x86)\Bluetooth Suite\FolderViewImpl.dll
+0x0000000058860000 - 0x00000000588f8000 	C:\Windows\SYSTEM32\MSVCP100.dll
+0x00007ffdb5cb0000 - 0x00007ffdb5cd1000 	C:\Program Files (x86)\Bluetooth Suite\utils.dll
+0x00007ffdc65b0000 - 0x00007ffdc65eb000 	C:\Windows\SYSTEM32\bthprops.cpl
+0x00007ffdbded0000 - 0x00007ffdbdedb000 	C:\Program Files (x86)\Bluetooth Suite\CommApi.dll
+0x00007ffdcaf70000 - 0x00007ffdcb14a000 	C:\Windows\system32\SETUPAPI.dll
+0x00007ffda98e0000 - 0x00007ffda990e000 	C:\Windows\SYSTEM32\credui.dll
+0x00007ffdc92c0000 - 0x00007ffdc92d2000 	C:\Windows\SYSTEM32\WTSAPI32.dll
+0x00007ffdc67b0000 - 0x00007ffdc67bc000 	C:\Windows\SYSTEM32\Secur32.dll
+0x00007ffdc35c0000 - 0x00007ffdc3671000 	C:\Windows\SYSTEM32\RASAPI32.dll
+0x00007ffdc6760000 - 0x00007ffdc6780000 	C:\Windows\SYSTEM32\BluetoothApis.dll
+0x00007ffdb73a0000 - 0x00007ffdb73ac000 	C:\Program Files (x86)\Bluetooth Suite\ipc.dll
+0x00007ffdc33c0000 - 0x00007ffdc33f0000 	C:\Windows\SYSTEM32\rasman.dll
+0x00007ffdb7340000 - 0x00007ffdb734b000 	C:\Program Files (x86)\Bluetooth Suite\TCPConnection.dll
+0x00007ffdca480000 - 0x00007ffdca4ae000 	C:\Windows\SYSTEM32\SSPICLI.DLL
+0x00007ffdac310000 - 0x00007ffdac3ca000 	C:\Windows\system32\ntshrui.dll
+0x0000000059040000 - 0x000000005905a000 	C:\Program Files\TortoiseSVN\bin\TortoiseStub.dll
+0x0000000058950000 - 0x00000000589d7000 	C:\Program Files\TortoiseSVN\bin\TortoiseSVN.dll
+0x00007ffdaa510000 - 0x00007ffdaaabc000 	C:\Program Files\TortoiseSVN\bin\libsvn_tsvn.dll
+0x0000000059000000 - 0x0000000059034000 	C:\Program Files\TortoiseSVN\bin\libapr_tsvn.dll
+0x00007ffdb8e70000 - 0x00007ffdb8e83000 	C:\Program Files\TortoiseSVN\bin\intl3_tsvn.dll
+0x00007ffdac270000 - 0x00007ffdac30e000 	C:\Program Files\TortoiseSVN\bin\MSVCP140.dll
+0x00007ffdb8b80000 - 0x00007ffdb8b97000 	C:\Program Files\TortoiseSVN\bin\VCRUNTIME140.dll
+0x00007ffdc81c0000 - 0x00007ffdc81c4000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-runtime-l1-1-0.dll
+0x00007ffdbc680000 - 0x00007ffdbc683000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-environment-l1-1-0.dll
+0x00007ffdbc600000 - 0x00007ffdbc604000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-string-l1-1-0.dll
+0x00007ffdbc420000 - 0x00007ffdbc425000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-multibyte-l1-1-0.dll
+0x00007ffdbab60000 - 0x00007ffdbab63000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-heap-l1-1-0.dll
+0x00007ffdba900000 - 0x00007ffdba904000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-stdio-l1-1-0.dll
+0x00007ffdb93d0000 - 0x00007ffdb93d4000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-convert-l1-1-0.dll
+0x00007ffdb9260000 - 0x00007ffdb9263000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-utility-l1-1-0.dll
+0x00007ffdb8fa0000 - 0x00007ffdb8fa3000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-time-l1-1-0.dll
+0x0000000058900000 - 0x0000000058946000 	C:\Program Files\TortoiseSVN\bin\libaprutil_tsvn.dll
+0x00007ffdb8990000 - 0x00007ffdb89ab000 	C:\Program Files\TortoiseSVN\bin\libsasl.dll
+0x00007ffdb8d80000 - 0x00007ffdb8d83000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-locale-l1-1-0.dll
+0x00007ffdb85a0000 - 0x00007ffdb85a3000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-conio-l1-1-0.dll
+0x00007ffdb8590000 - 0x00007ffdb8593000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-filesystem-l1-1-0.dll
+0x00007ffdb7e30000 - 0x00007ffdb7e35000 	C:\Program Files\TortoiseSVN\bin\api-ms-win-crt-math-l1-1-0.dll
+0x00007ffdcb150000 - 0x00007ffdcb1ac000 	C:\Windows\system32\WLDAP32.dll
+0x00007ffdabc70000 - 0x00007ffdabd64000 	C:\Program Files\TortoiseSVN\bin\ucrtbase.DLL
+0x00007ffdb7e00000 - 0x00007ffdb7e30000 	C:\Program Files\TortoiseSVN\bin\crshhndl.dll
+0x00007ffdca290000 - 0x00007ffdca2b6000 	C:\Windows\system32\srvcli.dll
+
+VM Arguments:
+jvm_args: -Dosgi.requiredJavaVersion=1.7 -Xms256m -Xmx1024m 
+java_command: <unknown>
+java_class_path (initial): C:\devel\ec45\eclipse\\plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar
+Launcher Type: generic
+
+Environment Variables:
+PATH=C:/Program Files/Java/jre1.8.0_77/bin/server;C:/Program Files/Java/jre1.8.0_77/bin;C:/Program Files/Java/jre1.8.0_77/lib/amd64;C:\Python27\;C:\Python27\Scripts;C:\Perl64\site\bin;C:\Perl64\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\TortoiseSVN\bin;D:\bat;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Users\tonipikkarainen\Downloads;"C:\Program Files\Java\jdk1.8.0_66\bin";"C:\Perl64\bin";D:\kurssit\ohj2\totapikk;
+USERNAME=tonipikkarainen
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 69 Stepping 1, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8.1 , 64 bit Build 9600 (6.3.9600.17415)
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 69 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2
+
+Memory: 4k page, physical 8269208k(1760372k free), swap 16310732k(2590824k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.77-b03) for windows-amd64 JRE (1.8.0_77-b03), built on Mar 20 2016 22:01:33 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Thu Apr 14 12:47:25 2016
+elapsed time: 11496 seconds (0d 3h 11m 36s)
+

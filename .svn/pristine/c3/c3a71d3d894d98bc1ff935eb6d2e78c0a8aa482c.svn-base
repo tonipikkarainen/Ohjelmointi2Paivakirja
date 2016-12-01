@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" minHeight="500.0" minWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="Ei löydy kyseisen henkilön päiväkirjaa.">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label text="Avaa päiväkirja:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField maxWidth="300.0" />
+            <HBox alignment="TOP_CENTER">
+               <children>
+                  <Button mnemonicParsing="false" text="Ok">
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Cancel">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Label text="Luo uusi päiväkirja (anna nimi):">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="210.0" layoutY="265.0" maxWidth="300.0" />
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="260.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Ok">
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Cancel">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

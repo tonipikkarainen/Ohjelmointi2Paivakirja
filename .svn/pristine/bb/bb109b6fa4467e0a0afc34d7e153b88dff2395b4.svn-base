@@ -1,0 +1,316 @@
+package paivakirja;
+
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+import fi.jyu.mit.ohj2.Mjonot;
+
+
+
+
+
+/**
+ * Luokka yksittäisille harjoituksille. 
+ * Annetaan harjoitukselle esim. id-numero.
+ * @author tonipikkarainen
+ * @version 23.2.2016
+ *
+ */
+public class Harjoitus implements Cloneable {
+
+    private int idNumero;
+    private String pvm = "";
+    private String soinnut = "";
+    private String saveltapailu = "";
+    private String tekniikka = "";
+    private int kesto_min;
+
+    private static int seuraavaId=1;
+
+    
+    /**
+     * Kertoo mistä kentästä alkaen halutaan
+     * näyttää käyttäjälle.
+     * @return ensimmäinen kenttä
+     */
+    public int ensimmainenKentta(){
+        return 1;
+    }
+
+
+    /**
+     * Antaa kenttien määrän
+     * @return kenttien määrä.
+     */
+    public int getKenttia() {
+       
+        return 6;
+    }
+
+
+    /**
+     * Tulostus
+     * @param os mihin tulostetaan
+     */
+    public void tulosta(OutputStream os){
+        tulosta(new PrintStream(os));
+    }
+
+
+    /**
+     * Tulostetaan harjoituksen tiedot
+     * @param out mihin tulostetaan
+     */
+    public void tulosta(PrintStream out){
+        out.println(String.format("%03d", idNumero));
+        out.println(pvm);
+        out.println(" "+soinnut);
+        out.println(" "+saveltapailu);
+        out.println(" "+tekniikka);
+        out.println(" "+
+                String.format("%03d", kesto_min));       
+    }
+
+
+    /**
+     * Selvitetään id
+     * @return id kokonaislukuna
+     */
+    public int getIdNumero(){
+        return idNumero;
+    }
+
+
+    /**
+     * Asettaa idnumeron
+     * @param id asetetaan idnumero
+     */
+    public void setIdNumero(int id){
+        idNumero = id;
+        if (idNumero >= seuraavaId) seuraavaId= idNumero + 1;
+    }
+
+
+    /**
+     * Rekistöidään harjoitus, kasvatetaan id:tä
+     * @return idNumero (kokonaisluku)
+     * @example
+     * <pre name="test">
+     * #import paivakirja.*;
+     * Harjoitus harj1 = new Harjoitus();
+     * harj1.getIdNumero() === 0;
+     * harj1.rekisteroi();
+     * Harjoitus harj2 = new Harjoitus();
+     * harj2.rekisteroi();
+     * int a = harj1.getIdNumero();
+     * int b = harj2.getIdNumero();
+     * b - a === 1;
+     * harj1.asetaKentat("  3|1.1.2013|sointu|test|testi|110  ");
+     * harj1.toString().equals("3|1.1.2013|sointu|test|testi|110") === true;
+     * </pre>
+     */
+    public int rekisteroi() {
+        if(idNumero > 0) return idNumero;
+        idNumero = seuraavaId;
+        seuraavaId++;
+        return idNumero;
+    }
+
+
+    /**
+     * Haetaan päivämäärä
+     * @return päivämäärä stringinä
+     */
+    public String getPvm() {
+        return pvm;
+    }
+
+
+    /**
+     * Ekaa harjoitusta vastaavat tiedot
+     */
+    public void vastaaEkaHarj(){
+        soinnut = "Billie´s Bounce";
+        saveltapailu = "";
+        tekniikka = "pikkaus";
+        kesto_min = kanta.Arpominen.rand(30,180);
+        pvm = " "+kanta.Arpominen.arvoPvm();
+
+    }
+
+
+    /**
+     * Muutetaan harjoitus merkkijonoksi.
+     */
+    @Override
+    public String toString(){
+        String rivi = idNumero +"|" +pvm +"|" +
+                soinnut + "|" + saveltapailu + "|"+
+                tekniikka +"|" +kesto_min ;
+
+        return rivi;
+    }
+
+
+    /**
+     * Asettaa keston
+     * @param kesto kesto
+     */
+    public void setKesto(int kesto){
+        kesto_min = kesto;
+    }
+
+
+    /**
+     * Kysyy keston
+     * @return kesto (min)
+     */
+    public int getKesto(){
+        return kesto_min;
+    }
+
+
+    /**
+     * Asetetaan tiedot tietyn rivin mukaiseksi
+     * @param rivi tuotu rivi
+     */
+    public void asetaKentat(String rivi) {
+        String vaihto = rivi;
+        //vaihto.replaceAll("t", "");
+        vaihto.trim();
+        StringBuilder tiedot = new StringBuilder(vaihto); //????
+
+        setIdNumero(Mjonot.erota(tiedot, '|', getIdNumero()));
+        pvm = Mjonot.erota(tiedot, '|');
+        soinnut= Mjonot.erota(tiedot, '|');
+        saveltapailu= Mjonot.erota(tiedot, '|');
+        tekniikka = Mjonot.erota(tiedot, '|');
+        setKesto(Mjonot.erota(tiedot, '|', getKesto()));//????
+    }
+    
+    
+
+    /**
+     * Antaa indeksiä vastaavan kentän
+     * @param k indeksi
+     * @return palauttaa kentän nimen
+     */
+    public String getKentta(int k) {
+        switch (k){
+        case 0:
+            return "id numero";
+        case 1:
+            return "päivämäärä";
+        case 2: 
+            return "soinnut";
+        case 3:
+            return "säveltapailu";
+        case 4:
+            return "tekniikka";
+        case 5:
+            return "kesto";
+        default:
+            return "ei löydy";
+        }
+    }
+    
+    
+    /**
+     * Antaa tiettyä indeksiä vastaavan tiedon
+     * @param i indeksi
+     * @return harjoituksen sisältö haetun kentän osalta
+     */
+    public String anna(int i) {
+        switch (i){
+        case 0:
+            return ""+idNumero;
+        case 1:
+            return ""+pvm;
+        case 2: 
+            return ""+soinnut;
+        case 3:
+            return ""+saveltapailu;
+        case 4:
+            return ""+tekniikka;
+        case 5:
+            return ""+kesto_min;
+        default:
+            return "ei löydy";
+        }
+    }
+
+
+    /**
+     * Asettaa tiedot tiettyihin kenttiin
+     * @param k kentän indeksi
+     * @param text tieto
+     * @return null jos kaikki ok
+     */
+    public String aseta(int k, String text) {
+        String trimmattu = text.trim();
+        
+        switch (k){
+        case 0:
+            return null;
+        case 1:
+            if (trimmattu.matches(".*\\..*\\..*")){
+              pvm = trimmattu;
+              return null;
+            }
+            return "Ei oikea päivämäärä";
+
+        case 2: 
+            soinnut = trimmattu;
+            return null;
+        case 3:
+            saveltapailu = trimmattu;
+            return null;
+        case 4:
+            tekniikka = trimmattu;
+            return null;
+        case 5:
+            setKesto(Mjonot.erota(new StringBuilder(trimmattu), ' ', getKesto()));
+            return null;
+        default:
+            return null;
+        }
+    }
+
+
+    @Override
+    public Harjoitus clone() throws CloneNotSupportedException{
+        Harjoitus uusi;
+        uusi = (Harjoitus)super.clone();
+        return uusi;
+    }
+
+
+
+    /**
+     * @param args ei käytössä
+     */
+    public static void main(String[] args) {
+        Harjoitus harj1 = new Harjoitus();
+        Harjoitus harj2 = new Harjoitus();
+
+        harj1.rekisteroi();
+        harj2.rekisteroi();
+
+        //harj1.vastaaEkaHarj();
+        //harj1.asetaKentat("  3  |  1.1.2013  | sointu   |    test |  testi|110  " );
+        harj2.vastaaEkaHarj();
+
+        harj1.tulosta(System.out);
+        harj2.tulosta(System.out);
+
+    }
+
+
+
+
+
+
+
+
+
+}

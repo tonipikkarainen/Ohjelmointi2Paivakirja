@@ -1,0 +1,73 @@
+package paivakirja;
+
+import java.util.ArrayList;
+
+/**
+ * Luokka huolehtii joukosta transkriptioita
+ * @author tonipikkarainen
+ * @version 29.2.2016
+ *
+ */
+public class Transkriptiot {
+    
+    private ArrayList<Transkriptio> alkiot = new ArrayList<Transkriptio>();
+    
+    /**
+     * Lis‰t‰‰n transkriptio listaan
+     * @param transkriptio lis‰tt‰v‰
+     */
+    public void lisaa(Transkriptio transkriptio){
+        alkiot.add(transkriptio);
+    }
+    
+    /**
+     * Haetaan tallennettujen alkioiden lukum‰‰r‰
+     * @return lukum‰‰r‰ kokonaislukuna
+     */
+    public int getLukumaara(){
+        return alkiot.size();
+    }
+    
+    
+    /**
+     * Haetaan tietty transkriptio alkioista
+     * @param i mist‰ paikasta transkriptio haetaan
+     * @return transkriptio tietyst‰ paikasta
+     * @throws IndexOutOfBoundsException jos annetaan v‰‰r‰nlainen indeksi
+     */
+    public Transkriptio anna(int i) throws IndexOutOfBoundsException {
+        if (i<0 || alkiot.size() <= i)
+            throw new IndexOutOfBoundsException("V‰‰r‰n suuruinen indeksi: " + i);
+        return alkiot.get(i);
+    }
+
+
+    /**
+     * kokeilup‰‰ohjelma
+     * @param args ei k‰ytˆss‰
+     */
+    public static void main(String[] args) {
+        Transkriptiot transkriptiot = new Transkriptiot();
+         
+        Transkriptio badmama1 = new Transkriptio();
+        Transkriptio badmama2 = new Transkriptio();
+        
+        badmama1.vastaaBad();
+        badmama2.vastaaBad();
+        
+        badmama1.rekisteroi();
+        badmama2.rekisteroi();
+
+        transkriptiot.lisaa(badmama1);
+        transkriptiot.lisaa(badmama2);
+        
+        
+        System.out.println("===== transkriptiot-testi =====");
+        for(int i = 0; i < transkriptiot.getLukumaara(); i++){
+            Transkriptio transkriptio = transkriptiot.anna(i);
+            System.out.println("Transkriptio numero: "+i);
+            transkriptio.tulosta(System.out);
+        }
+    }
+
+}

@@ -1,0 +1,277 @@
+package paivakirja;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import fi.jyu.mit.ohj2.WildChars;
+
+/**
+ * Luokka pit‰‰ huolen yhdest‰ kokonaisuudesta harjoituksia
+ * @author tonipikkarainen
+ * @version 23.2.2016
+ *
+ */
+public class Harjoitukset {
+
+    private static final int MAX_HARJOITUSLKM = 8;
+    private Harjoitus[] alkiot = new Harjoitus[MAX_HARJOITUSLKM];
+    private int lukumaara;
+    private String tiedostonPerusNimi = "harjoitukset";
+
+
+    /**
+     * Lis‰t‰‰n uusi harjoitus
+     * @param harj harjoitus joka lis‰t‰‰n
+     * @throws SailoException jos tuodaan liikaa alkioita
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * Harjoitukset harjoitukset = new Harjoitukset();
+     * Harjoitus harj1 = new Harjoitus();
+     * Harjoitus harj2 = new Harjoitus();
+     * harjoitukset.lisaa(harj1); 
+     * int a = harjoitukset.getLukumaara();
+     * harjoitukset.lisaa(harj2);
+     * int b =  harjoitukset.getLukumaara();
+     * b - a  ===  1;
+     * harjoitukset.anna(0) === harj1;
+     * harjoitukset.anna(1) === harj2;
+     * harjoitukset.anna(4) === harj1; #THROWS IndexOutOfBoundsException
+     * harjoitukset.lisaa(harj2);
+     * harjoitukset.lisaa(harj2);
+     * harjoitukset.lisaa(harj2);
+     * harjoitukset.lisaa(harj2);
+     * harjoitukset.lisaa(harj2);
+     * harjoitukset.lisaa(harj2);
+     * harjoitukset.lisaa(harj2);  
+     * </pre>
+     */
+    public void lisaa(Harjoitus harj) throws SailoException{
+        Harjoitus[] alkiot_apu;
+        
+        if (lukumaara >= alkiot.length){
+            alkiot_apu = new Harjoitus[alkiot.length+10];
+            for(int i = 0 ; i < alkiot.length ; i++){
+                alkiot_apu[i]=alkiot[i];
+            }
+            alkiot = alkiot_apu;
+        }
+        alkiot[lukumaara++]=harj; 
+    }
+
+
+    /**
+     * Haetaan tietty harjoitus alkioista
+     * @param i mist‰ paikasta harjoitus haetaan
+     * @return harjoituksen tietyst‰ paikasta
+     * @throws IndexOutOfBoundsException jos annetaan v‰‰r‰nlainen indeksi
+     */
+    public Harjoitus anna(int i) throws IndexOutOfBoundsException {
+        if (i<0 || lukumaara <= i)
+            throw new IndexOutOfBoundsException("V‰‰r‰n suuruinen indeksi: " + i);
+        return alkiot[i];
+    }
+
+
+    /** 
+     * Kysyt‰‰n harjoitusten m‰‰r‰
+     * @return lukum‰‰r‰
+     */
+    public int getLukumaara(){
+        return lukumaara;
+    }
+
+
+    /**
+     * Tallennetaan harjoitukset
+     *  @throws SailoException jos talletus ep‰onnistuu
+     */
+    public void tallenna()  throws SailoException{
+        File tiedNimi = new File(getTiedostonNimi());
+        try( PrintWriter fo = new PrintWriter(new FileWriter(tiedNimi.getCanonicalPath()))) {     
+            for(int i = 0; i < lukumaara; i++){
+                Harjoitus harjoitus = alkiot[i];
+                fo.println(harjoitus);     
+            }
+        }
+        catch ( FileNotFoundException ex){
+            System.err.println("Tiedosto ei aukea: " + ex.getMessage());
+        } catch (IOException e) {
+
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+
+    /**
+     * Hakee tiedoston nime‰ vastaavat harjoitukset
+     * @throws SailoException jos liikaa j‰seni‰
+     */
+    public void haeHarjoitukset() throws SailoException{
+        haeHarjoitukset(getTiedostonPerusnimi());
+    }
+
+
+    private String getTiedostonPerusnimi() {
+        return tiedostonPerusNimi;
+    }
+
+
+    /**
+     * Lukee harjoitukset tiedostosta
+     * @param nimi tiedoston nimi
+     * @throws SailoException jos liikaa j‰seni‰
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * #import java.io.File;
+     * Harjoitukset harjtesti = new Harjoitukset();
+     * Harjoitus harj1t = new Harjoitus();
+     * Harjoitus harj2t = new Harjoitus();
+     * harj1t.vastaaEkaHarj();
+     * harj2t.vastaaEkaHarj();
+     * String hakemisto = "pvktesti";
+     * String tnimi = hakemisto+"/harjoitukset";
+     * File dir = new File(hakemisto);
+     * File tiedosto = new File(tnimi+".dat");
+     * dir.mkdir();
+     * tiedosto.delete();
+     * harjtesti.haeHarjoitukset(tnimi); #THROWS SailoException
+     * harjtesti.lisaa(harj1t);
+     * harjtesti.lisaa(harj2t);
+     * harjtesti.tallenna();
+     * harjtesti = new Harjoitukset();
+     * harjtesti.haeHarjoitukset(tnimi);
+     * harjtesti.anna(0).toString().equals(harj1t.toString()) === true;
+     * harjtesti.anna(1).toString().equals(harj2t.toString()) === true;
+     * tiedosto.delete() === true;
+     * dir.delete() === true;
+     * </pre>
+     */
+    public void haeHarjoitukset(String nimi) throws SailoException {
+        setTiedostonPerusNimi(nimi);
+
+        try(Scanner fi = new Scanner(new FileInputStream(new File(getTiedostonNimi())))){
+            while(fi.hasNext()){
+                String rivi = fi.nextLine();
+                rivi = rivi.trim();
+                Harjoitus harj = new Harjoitus();
+                harj.asetaKentat(rivi);
+                lisaa(harj); 
+            }
+        }catch (FileNotFoundException e){
+            throw new SailoException("Tiedosto ei aukea.");
+        }
+
+    }
+
+
+    private String getTiedostonNimi() {
+        return getTiedostonPerusnimi()+".dat";
+    }
+
+
+    /**
+     * asettaa tiedoston nimen
+     * @param nimi tiedoston nimi
+     */
+    public void setTiedostonPerusNimi(String nimi) {
+        tiedostonPerusNimi = nimi;   
+    }
+    
+
+    /**
+     * Korvaa harjoituksen jolla on sama id kuin
+     * tuodulla harjoituksella
+     * @param kopio t‰ll‰ korvataan
+     */
+    public void korvaa(Harjoitus kopio) {
+        int id = kopio.getIdNumero();
+        for(int i = 0 ; i<lukumaara ; i++){
+            if( alkiot[i].getIdNumero() == id){
+                alkiot[i] = kopio;
+                return;
+            }
+        }
+    
+    }
+    
+
+    /**
+     * Haetaan harjoitukset hakuehdolla
+     * @param ehto hakuehto
+     * @param k kentt‰ jota haetaan
+     * @return harjoitukset listassa
+     */
+    public ArrayList<Harjoitus> etsi(String ehto, int k) {
+        ArrayList<Harjoitus> harkat = new ArrayList<Harjoitus>();
+        for(int i = 0 ; i < lukumaara ; i++){
+            ;
+            if(WildChars.onkoSamat(alkiot[i].anna(k), ehto)){
+                harkat.add(alkiot[i]);
+            }
+        }
+        return harkat;
+    }
+
+
+
+    public int poistaHarjoitus(int idNumero) {
+        
+        int luku, kirj;
+        for (luku = 0, kirj = 0; luku < lukumaara; luku++){
+            if (alkiot[luku].getIdNumero() != idNumero){
+                alkiot[kirj++] = this.anna(luku);
+            }
+        }
+        lukumaara = kirj;
+        return kirj;  
+    }
+
+
+
+
+    /**
+     * kokeilup‰‰ohjelma
+     * @param args ei k‰ytˆss‰
+     */
+    public static void main(String[] args) {
+        Harjoitukset harjoitukset = new Harjoitukset();
+
+        try{
+            Harjoitus harj1 = new Harjoitus();
+            Harjoitus harj2 = new Harjoitus();
+
+            harj1.rekisteroi();
+            harj2.rekisteroi();
+
+            harj1.vastaaEkaHarj();
+            harj2.vastaaEkaHarj();
+
+            harjoitukset.lisaa(harj1);
+            harjoitukset.lisaa(harj2);
+
+            System.out.println("===== Harjoitukset-testi =====");
+            for(int i = 0; i < harjoitukset.getLukumaara(); i++){
+                Harjoitus harjoitus = harjoitukset.anna(i);
+                System.out.println("Harjoitus numero: "+i);
+                harjoitus.tulosta(System.out);
+            }
+
+        }catch(SailoException e){
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+
+
+
+}

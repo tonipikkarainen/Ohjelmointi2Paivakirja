@@ -1,0 +1,136 @@
+
+
+package paivakirja;
+
+/**
+ * huolehtii Harjoitukset ja Transkriptiot-luokkien ja Harjoitukset ja Arpeggiot-luokkien            | - HarjTransLiitos |
+ * v‰lisest‰ yhteistyˆst‰ ja v‰litt‰‰ n‰it‰ tietoja pyydett‰ess‰  
+ * @author tonipikkarainen
+ * @version 25.2.2016
+ *
+ */
+public class Paivakirja {
+    private final Harjoitukset harjoitukset = new Harjoitukset();
+    private final Transkriptiot transkriptiot = new Transkriptiot();
+    private final Transliitokset transliitokset = new Transliitokset();
+
+    /**
+     * lis‰t‰‰n harjoitus
+     * @param harj lis‰tt‰v‰
+     * @throws SailoException jos ei onnnistu
+     */
+    public void lisaa(Harjoitus harj)throws SailoException{
+        harjoitukset.lisaa(harj);
+    }
+    
+    
+    /**
+     * Lis‰t‰‰n transkriptio
+     * @param trans lis‰tt‰v‰
+     */
+    public void lisaa(Transkriptio trans){
+        transkriptiot.lisaa(trans);
+    }
+    
+    /**
+     * Lis‰t‰‰n transliitos
+     * @param trans lis‰tt‰v‰
+     */
+    public void lisaa(Transliitos trans){
+        transliitokset.lisaa(trans);
+    }
+
+
+    /**
+     * Harjoitusten lukum‰‰r‰
+     * @return lkm kokonaislukuna
+     */
+    public int getHarjoituksia(){
+        return harjoitukset.getLukumaara();
+    }
+    
+    
+    /**
+     * transkriptioden lukum‰‰r‰
+     * @return lkm kokonaislukuna
+     */
+    public int getTranskriptiota(){
+        return transkriptiot.getLukumaara();
+    }
+    
+    
+    /**
+     * transliitosten lukum‰‰r‰
+     * @return lkm kokonaislukuna
+     */
+    public int getTransliitoksia(){
+        return transliitokset.getLukumaara();
+    }
+
+    
+    /**
+     * Kysyt‰‰n tietty harjoitus
+     * @param i kuinka mones harjoitus halutaan
+     * @return harjoitus
+     * @throws IndexOutOfBoundsException jos v‰‰r‰ indeksi
+     */
+    public Harjoitus annaHarjoitus(int i)throws IndexOutOfBoundsException{
+        return harjoitukset.anna(i);
+    }
+
+    
+    /**
+     * Kysyt‰‰n tietty transkriptio
+     * @param i kuinka mones transkriptio halutaan
+     * @return transkriptiot
+     * @throws IndexOutOfBoundsException jos v‰‰r‰ indeksi
+     */
+    public Transkriptio annaTranskriptiot(int i)throws IndexOutOfBoundsException{
+        return transkriptiot.anna(i);
+    }
+    
+    /**
+     * Kysyt‰‰n tietty transliitos
+     * @param i kuinka mones transliitos halutaan
+     * @return transliitos
+     * @throws IndexOutOfBoundsException jos v‰‰r‰ indeksi
+     */
+    public Transliitos annaTransliitokset(int i)throws IndexOutOfBoundsException{
+        return transliitokset.anna(i);
+    }
+    
+    
+    /**
+     * kokeilup‰‰ohjelma
+     * @param args ei k‰ytˆss‰
+     */
+    public static void main(String[] args) {
+        Paivakirja paivakirja = new Paivakirja();
+
+        Harjoitus harj1 = new Harjoitus();
+        Harjoitus harj2 = new Harjoitus();
+
+        harj1.rekisteroi();
+        harj2.rekisteroi();
+
+        harj1.vastaaEkaHarj();
+        harj2.vastaaEkaHarj();
+
+        try{
+            paivakirja.lisaa(harj1);
+            paivakirja.lisaa(harj2);
+          
+
+            System.out.println("===== paivakirja-testi =====");
+            for(int i = 0; i < paivakirja.getHarjoituksia(); i++){
+                Harjoitus harjoitus = paivakirja.annaHarjoitus(i);
+                System.out.println("Harjoitus numero: "+i);
+                harjoitus.tulosta(System.out);
+
+            }
+        }catch(SailoException e){
+            System.err.println(e.getMessage());
+        }
+
+    }
+}

@@ -1,0 +1,50 @@
+﻿
+
+!https://trac.cc.jyu.fi/projects/ohj2ht/wiki/k2016/suunnitelmat/totapikk = Suunnitelma Wikissä
+kuvat/paaikkunak.png = ohjelman pääikkuna (paint)
+kuvat/avaak.png      = kuva ohjelman alusta (paint)
+kuvat/eiaukeak.png   = virheilmoitus jos tiedostoa ei ole (paint)
+kuvat/summakeskipituusk.png  = summan ja keskipituuden tulostus (paint)
+kuvat/paaikkuna.png = ohjelman pääikkuna 
+kuvat/avaa.png      = kuva ohjelman alusta 
+kuvat/eiaukea.png   = virheilmoitus jos päiväkirjaa ei ole
+kuvat/summakeskipituus.png  = summan ja keskipituuden tulostus
+kuvat/tallennus.png
+kuvat/lisaatranskriptio.png
+kuvat/lisaaarpeggio.png
+kuvat/uusipaivakirja.png
+kuvat/muokkaus.png
+=
+= <h3>Käyttöliittymän ulkoasu JavaFX:llä</h3>
+src/fxpaivakirja/PaivakirjaGUIController.java = käyttöliittymän kontrolleri
+src/fxpaivakirja/PaivakirjaGUIView.fxml
+src/fxpaivakirja/PaivakirjaMain.java
+src/fxpaivakirja/paivakirja.css
+=
+src/fxpaivakirja/LisaaArpeggioController.java = Arpeggion lisäysikkunan kontrolleri
+src/fxpaivakirja/LisaaArpeggioView.fxml
+=
+src/fxpaivakirja/LisaaTranskriptioController.java = Transkription lisäysikkunan kontrolleri
+src/fxpaivakirja/LisaaTranskriptioView.fxml
+=
+src/fxpaivakirja/PaivakirjanNimiController.java = Kontrolleri uuden päiväkirjan avaamiselle
+src/fxpaivakirja/AvaaView.fxml 
+src/fxpaivakirja/EiaukeaView.fxml
+=
+src/fxpaivakirja/SummakeskipituusView.fxml 
+src/fxpaivakirja/TietojaView.fxml
+=
+src/fxpaivakirja/MuokkausView.fxml 
+src/fxpaivakirja/MuokkausController.java
+=
+paivakirja.jar = .jar tiedosto
+build.xml = ant-skripti
+=
+kuvat/htvaihe4.png = tietorakenteen kuva
+!https://trac.cc.jyu.fi/projects/ohj2ht/wiki/k2016/suunnitelmat/totapikkCRC= CRC-kortit Wikissä
+=
+paivakirja/Harjoitus.java  =  yhtä harjoitusta hallitseva luokka 
+kanta/Arpominen.java = arvotaan esim. päivämäärä
+paivakirja/Harjoitukset.java  =  harjoituksia hallitseva luokka 
+paivakirja/SailoException.java  =  tietokannan sisältöön liittyviä poikkeuksia 
+=
